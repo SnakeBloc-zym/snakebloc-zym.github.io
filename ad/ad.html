@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>广告轮播</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            height: auto;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            /* max-width: 880px; */
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-images a {
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .carousel-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .carousel-indicator.active {
+            background-color: white;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .carousel-btn.prev {
+            left: 10px;
+        }
+
+        .carousel-btn.next {
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel-container">
+        <div class="carousel-images"></div>
+        <button class="carousel-btn prev"><i class="fas fa-chevron-left" style="font-size: 17px;"></i></button>
+        <button class="carousel-btn next"><i class="fas fa-chevron-right" style="font-size: 17px;"></i></button>
+        <div class="carousel-indicators"></div>
+    </div>
+
+    <script>
+        const carouselContainer = document.querySelector('.carousel-container');
+        const imagesContainer = carouselContainer.querySelector('.carousel-images');
+        const indicatorsContainer = carouselContainer.querySelector('.carousel-indicators');
+        let imageCount = 0;
+        let currentIndex = 0;
+        let interval;
+        let isTransitioning = false;
+
+        async function loadAds() {
+            try {
+                const response = await fetch('./ad-list.json');
+                const ads = await response.json();
+
+                ads.forEach(ad => {
+                    const link = document.createElement('a');
+                    link.href = ad.url;
+                    link.target = "_blank";
+
+                    const img = document.createElement('img');
+                    img.src = ad.image.trim();
+                    img.alt = ad.alt || '广告';
+
+                    link.appendChild(img);
+                    imagesContainer.appendChild(link);
+                    imageCount++;
+                });
+
+                const firstClone = imagesContainer.firstElementChild.cloneNode(true);
+                const lastClone = imagesContainer.lastElementChild.cloneNode(true);
+
+                imagesContainer.prepend(lastClone);
+                imagesContainer.append(firstClone);
+
+                imageCount += 2;
+
+                currentIndex = 1;
+                updateCarouselPosition();
+
+                ads.forEach((_, index) => {
+                    const indicator = createIndicator(index);
+                    indicatorsContainer.appendChild(indicator);
+                });
+
+                updateIndicators();
+
+            } catch (error) {
+                console.error("加载广告失败：", error);
+            }
+        }
+
+        function createIndicator(index) {
+            const indicator = document.createElement('div');
+            indicator.className = 'carousel-indicator';
+            if (index === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => {
+                stopSlider();
+                goToSlide(index + 1);
+                startSlider();
+            });
+            return indicator;
+        }
+
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === (currentIndex - 1)); // -1 是因为克隆
+            });
+        }
+
+        function updateCarouselPosition() {
+            const offset = -currentIndex * 100;
+            imagesContainer.style.transform = `translateX(${offset}%)`;
+        }
+
+        function goToSlide(index) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            currentIndex = index;
+            updateCarouselPosition();
+            updateIndicators();
+        }
+
+        imagesContainer.addEventListener('transitionend', () => {
+            isTransitioning = false;
+
+            if (currentIndex === imageCount - 1) {
+                currentIndex = 1;
+                imagesContainer.style.transition = 'none';
+                updateCarouselPosition();
+                setTimeout(() => {
+                    imagesContainer.style.transition = 'transform 0.5s ease-in-out';
+                }, 10);
+            }
+
+            if (currentIndex === 0) {
+                currentIndex = imageCount - 2;
+                imagesContainer.style.transition = 'none';
+                updateCarouselPosition();
+                setTimeout(() => {
+                    imagesContainer.style.transition = 'transform 0.5s ease-in-out';
+                }, 10);
+            }
+
+            updateIndicators();
+        });
+
+        function nextSlide() {
+            if (isTransitioning) return;
+            currentIndex++;
+            goToSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            if (isTransitioning) return;
+            currentIndex--;
+            goToSlide(currentIndex);
+        }
+
+        function startSlider() {
+            stopSlider();
+            interval = setInterval(nextSlide, 3000);
+        }
+
+        function stopSlider() {
+            clearInterval(interval);
+        }
+
+        document.querySelector('.carousel-btn.next').addEventListener('click', () => {
+            stopSlider();
+            nextSlide();
+            startSlider();
+        });
+
+        document.querySelector('.carousel-btn.prev').addEventListener('click', () => {
+            stopSlider();
+            prevSlide();
+            startSlider();
+        });
+
+        imagesContainer.addEventListener('mouseenter', stopSlider);
+        imagesContainer.addEventListener('mouseleave', startSlider);
+        imagesContainer.addEventListener('touchstart', stopSlider);
+        imagesContainer.addEventListener('touchend', startSlider);
+
+        loadAds().then(() => {
+            startSlider();
+        });
+    </script>
+</body>
+
+</html>

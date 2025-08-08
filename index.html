@@ -1,0 +1,3014 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>SnakeBloc Community</title>
+	<link rel="stylesheet" href="https://cdn.iocdn.cc/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.iocdn.cc/npm/katex@0.16.8/dist/katex.min.css">
+	<link rel="stylesheet" href="https://cdn.iocdn.cc/npm/highlight.js@11.9.0/styles/github.min.css">
+	<link rel="stylesheet" href="https://cdn.iocdn.cc/npm/lxgw-wenkai-screen-webfont@1.7.0/style.min.css">
+	<link rel="stylesheet" href="https://cdn.iocdn.cc/npm/sweetalert2@11/dist/sweetalert2.min.css">
+	<link rel="stylesheet" href="https://jsd-proxy.ygxz.in/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css">
+	<style>
+		body {
+			font-family: LXGW Wenkai Screen;
+			margin: 0;
+			padding: 0;
+			background-color: #fff;
+			color: #333
+		}
+		
+		.container {
+			max-width: 1400px;
+			margin: 0 auto;
+			padding: 20px;
+			padding-top: 70px !important
+		}
+		
+		.header {
+			color: #555;
+			padding: 15px 0;
+			background: linear-gradient(90deg, #ffffff 0%, #f0f8ff 100%);
+			box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: fixed;
+			width: 100%;
+			z-index: 1000;
+			top: 0
+		}
+		
+		.logo {
+			font-size: 32px;
+			font-weight: bold;
+			margin-left: 20px;
+			font-family: 'Caveat'
+		}
+		
+		.nav {
+			display: flex;
+			align-items: center
+		}
+		
+		.nav-item {
+			margin-right: 15px;
+			cursor: pointer;
+			color: #555;
+			text-decoration: none
+		}
+		
+		.nav-item:hover {
+			text-decoration: underline
+		}
+		
+		.auth-section {
+			display: flex;
+			align-items: center;
+			margin-right: 15px
+		}
+		
+		.login-btn {
+			background-color: #059669;
+			color: white;
+			border: none;
+			padding: 8px 15px;
+			border-radius: 4px;
+			cursor: pointer
+		}
+		
+		.login-btn:hover {
+			background-color: #0b916b
+		}
+		
+		.main-content {
+			display: flex;
+			margin-top: 10px;
+		}
+		
+		.content-area {
+			flex: 1;
+			margin-left: 60px;
+			transition: margin-left 0.3s
+		}
+		
+		.content-area.expanded {
+			margin-left: 260px
+		}
+		
+		.sidebar {
+			width: 70px;
+			height: calc(100vh - 70px);
+			position: fixed;
+			background: linear-gradient(180deg, #ffffff 0%, #f0f8ff 100%);
+			border-right: 2px solid #e6f3ff;
+			box-shadow: 2px 0 10px rgba(135, 206, 250, 0.1);
+			transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+			overflow: hidden;
+			backdrop-filter: blur(10px);
+			z-index: 900;
+			margin-top: 70px;
+			padding-top: 10px;
+			color: #2c3e50;
+		}
+		
+		.sidebar.expanded {
+			width: 250px
+		}
+		
+		.sidebar-item {
+			display: flex;
+			align-items: center;
+			padding: 15px 23px;
+			cursor: pointer;
+		}
+		
+		.sidebar-item i {
+			margin-right: 15px;
+			font-size: 18px;
+			min-width: 20px;
+			width: 20px;
+			text-align: center;
+		}
+		
+		.sidebar-item span {
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s ease, visibility 0.3s ease;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+		
+		.sidebar.expanded .sidebar-item span {
+			opacity: 1;
+			visibility: visible;
+		}
+		
+		.sidebar-item:hover {
+			background-color: #f9f9f9
+		}
+		
+		.page {
+			margin-right: -5px;
+			border-radius: 20px;
+			/* box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+			border: 1px solid rgba(135, 206, 250, 0.2);
+			background: #fff; */
+		}
+		
+		.card {
+			background-color: white;
+			padding: 20px;
+			margin: 20px;
+			border-radius: 20px
+		}
+		
+		.card-title {
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 15px
+		}
+		
+		.card-content {
+			line-height: 1.6
+		}
+		
+		.btn {
+			padding: 6px 12px !important;
+			border-radius: 8px !important;
+			font-weight: 600 !important;
+			font-size: 0.85rem !important;
+			transition: all 0.3s ease !important;
+			border: none !important;
+			cursor: pointer;
+			text-decoration: none !important;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px
+		}
+		
+		.btn.primary {
+			background: linear-gradient(135deg, #667eea, #764ba2) !important;
+			color: white !important
+		}
+		
+		.btn.secondary {
+			background: #f1f5f9 !important;
+			color: #475569 !important;
+			border: 2px solid #e2e8f0 !important
+		}
+		
+		.btn.danger {
+			background: #FF6666 !important;
+			color: #ffffff !important;
+			border: 2px solid #ff4040 !important
+		}
+		
+		.btn.danger:hover {
+			box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4) !important
+		}
+		
+		.btn.original {
+			background: #059669 !important;
+			color: white !important;
+			border: 2px solid #0b916b !important
+		}
+		
+		.btn.original:hover {
+			box-shadow: 0 8px 25px rgba(58, 143, 49, 0.4) !important
+		}
+		
+		.btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3)
+		}
+		
+		.btn:disabled {
+			box-shadow: none !important;
+			transform: translateY(0px) !important
+		}
+		
+		.btn.secondary:hover {
+			background: #e2e8f0 !important;
+			box-shadow: 0 8px 25px rgba(71, 85, 105, 0.2) !important
+		}
+		
+		.modal {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 1100;
+			justify-content: center;
+			align-items: center
+		}
+		
+		.modal-content {
+			background-color: white;
+			padding: 20px;
+			border-radius: 20px;
+			width: 80%;
+			max-width: 500px
+		}
+		
+		.modal-title {
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 15px
+		}
+		
+		.modal-footer {
+			text-align: right;
+			margin-top: 20px
+		}
+		
+		.form-group {
+			margin-bottom: 15px
+		}
+		
+		.form-label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold
+		}
+		
+		.form-input {
+			width: calc(100% - 20px);
+			padding: 8px;
+			border: 1px solid #ddd;
+			border-radius: 4px
+		}
+		
+		.form-textarea {
+			width: calc(100% - 19px);
+			padding: 8px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			min-height: 100px;
+			resize: vertical
+		}
+		
+		.user-info {
+			display: flex;
+			align-items: center;
+			margin-bottom: 15px
+		}
+		
+		.user-avatar {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			background-color: #3498db;
+			color: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 20px;
+			margin-right: 15px
+		}
+		
+		.user-name {
+			font-weight: bold
+		}
+		
+		.user-role {
+			font-size: 12px;
+			color: #7f8c8d
+		}
+		
+		.snake-coin {
+			color: #f39c12;
+			font-weight: bold
+		}
+		
+		.checkin-btn {
+			background-color: #f39c12;
+			margin-top: 10px
+		}
+		
+		.message-list {
+			margin: 20px
+		}
+		
+		.message-item {
+			background-color: white;
+			border-radius: 20px;
+			padding: 20px;
+			margin-bottom: 15px;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+		}
+		
+		.message-header {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 10px
+		}
+		
+		.message-author {
+			font-weight: bold
+		}
+		
+		.message-time {
+			color: #7f8c8d;
+			font-size: 12px
+		}
+		
+		.message-content {
+			margin-bottom: 10px
+		}
+		
+		.message-actions {
+			display: flex
+		}
+		
+		.message-action {
+			margin-right: 10px;
+			color: #3498db;
+			cursor: pointer;
+			font-size: 12px
+		}
+		
+		.message-action:hover {
+			text-decoration: underline
+		}
+		
+		.admin-panel {
+			margin-top: 20px
+		}
+		
+		.admin-section {
+			margin-bottom: 30px
+		}
+		
+		.admin-title {
+			font-size: 18px;
+			font-weight: bold;
+			margin-bottom: 15px;
+			border-bottom: 1px solid #eee;
+			padding-bottom: 10px
+		}
+		
+		.admin-table {
+			width: 100%;
+			height: 100%;
+			border-collapse: collapse
+		}
+		
+		.admin-table th,
+		.admin-table td {
+			padding: 10px;
+			text-align: left;
+			border-bottom: 1px solid #eee
+		}
+		
+		.admin-table th {
+			background-color: #f9f9f9
+		}
+		
+		.markdown-preview {
+			border: 1px solid #eee;
+			padding: 15px;
+			border-radius: 5px;
+			margin-bottom: 15px
+		}
+		
+		.katex {
+			font-size: 1.1em
+		}
+		
+		.hidden {
+			display: none
+		}
+		
+		.group-list {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+			gap: 20px
+		}
+		
+		.group-card {
+			background-color: white;
+			border-radius: 20px;
+			padding: 20px;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+		}
+		
+		.group-name {
+			font-weight: bold;
+			margin-bottom: 10px
+		}
+		
+		.group-members {
+			font-size: 12px;
+			color: #7f8c8d
+		}
+		
+		.redpacket {
+			background-color: #fef6e4;
+			border-left: 4px solid#f39c12;
+			padding: 10px;
+			margin: 10px 0
+		}
+		
+		.redpacket-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 5px
+		}
+		
+		.redpacket-sender {
+			font-weight: bold;
+			color: #f39c12
+		}
+		
+		.redpacket-amount {
+			font-weight: bold
+		}
+		
+		.redpacket-desc {
+			font-size: 12px;
+			color: #7f8c8d
+		}
+		
+		.redpacket-btn {
+			background-color: #f39c12;
+			color: white;
+			border: none;
+			padding: 5px 10px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 12px;
+			margin-top: 5px
+		}
+		
+		.redpacket-btn:hover {
+			background-color: #d35400
+		}
+		
+		.toast {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			background-color: #333;
+			color: white;
+			padding: 10px 20px;
+			border-radius: 4px;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+			z-index: 1200;
+			animation: fadeIn 0.3s
+		}
+		
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(20px)
+			}
+		
+			to {
+				opacity: 1;
+				transform: translateY(0)
+			}
+		}
+		
+		pre code.hljs {
+			font-family: 'Consolas';
+			width: auto;
+			display: block;
+			padding: 12px;
+			padding-left: 20px;
+			margin: 2rem 0;
+			background: #f8fafc;
+			border-radius: 10px;
+			border: 1px solid #e2e8f0;
+			overflow-x: auto;
+			overflow-y: auto;
+			line-height: 1.6 !important;
+			font-size: 0.95rem !important;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08)
+		}
+		
+		blockquote {
+			background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+			border-left: 4px solid #0ea5e9 !important;
+			margin: 1.5rem 0 !important;
+			padding: 0.4rem 1.8rem !important;
+			padding-top: 1.5rem !important;
+			border-radius: 0 10px 10px 0 !important;
+			font-size: 1.05rem !important;
+			box-sizing: inherit;
+			display: block;
+			margin-block-start: 1em;
+			margin-block-end: 1em;
+			margin-inline-start: 40px;
+			margin-inline-end: 40px;
+			unicode-bidi: isolate
+		}
+		
+		blockquote p {
+			margin-top: 0px
+		}
+		
+		.message-content img,
+		.markdown-preview img {
+			max-width: 100% !important;
+			height: auto !important;
+			border-radius: 8px !important;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+			margin: 1.5rem 0 !important;
+			transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+			cursor: pointer !important;
+			border-style: none;
+			overflow: clip
+		}
+		
+		.message-content img:hover,
+		.markdown-preview img:hover {
+			transform: scale(1.02) !important;
+			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important
+		}
+		
+		ul {
+			display: block;
+			list-style-type: disc;
+			margin-block-start: 1em;
+			margin-block-end: 1em;
+			padding-inline-start: 40px;
+			unicode-bidi: isolate
+		}
+		
+		ol {
+			display: block;
+			list-style-type: decimal;
+			margin-block-start: 1em;
+			margin-block-end: 1em;
+			padding-inline-start: 40px;
+			unicode-bidi: isolate
+		}
+		
+		svg {
+			pointer-events: none
+		}
+		
+		p {
+			margin-bottom: 1.3rem;
+			font-size: 1.1rem
+		}
+		
+		.card a,
+		.message-content a,
+		.markdown-preview a {
+			background-position: 0 100%;
+			background-repeat: repeat-x;
+			background-size: 5px 5px;
+			text-decoration: none;
+			transition: all .35s ease;
+			color: #000;
+			background-image: linear-gradient(to bottom, rgba(14, 165, 233, .55) 0%, rgba(14, 165, 233, .55) 100%)
+		}
+		
+		.card a:hover,
+		.message-content a:hover,
+		.markdown-preview a:hover {
+			color: white;
+			background-size: 5px 50px
+		}
+		
+		table {
+			border-collapse: collapse !important;
+			border-spacing: 0 !important;
+			overflow-x: auto;
+			min-width: 600px !important;
+			font-size: 1rem !important;
+			width: 100%;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			border: 1px solid #e2e8f0;
+			background: white
+		}
+		
+		thead {
+			display: table-header-group;
+			vertical-align: middle;
+			unicode-bidi: isolate;
+			border-color: inherit;
+			border-radius: 10px
+		}
+		
+		tbody {
+			border-radius: 10px
+		}
+		
+		tr {
+			display: table-row;
+			vertical-align: inherit;
+			unicode-bidi: isolate;
+			border-color: inherit
+		}
+		
+		th {
+			background: #f8fafc !important;
+			font-weight: 600 !important;
+			color: #374151 !important;
+			border-bottom: 2px solid #e2e8f0 !important
+		}
+		
+		th,
+		td {
+			padding: 12px 16px !important;
+			font-size: 1rem !important;
+			border-bottom: 1px solid #e2e8f0;
+			border-right: 1px solid rgba(34, 36, 38, .1);
+			white-space: nowrap
+		}
+		
+		table tbody tr:hover {
+			background-color: #f8fafc
+		}
+		
+		hr {
+			color: #374151
+		}
+		
+		.codecopy-btn {
+			opacity: 0.7 !important;
+			min-height: 1em;
+			outline: 0;
+			vertical-align: baseline;
+			position: absolute;
+			top: 10px !important;
+			right: 10px !important;
+			background: #f8fafc;
+			padding: 6px 10px !important;
+			color: rgba(0, 0, 0, 0.6);
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			box-shadow: transparent 0px 0px 0px 1px inset, rgba(34, 36, 38, 0.15) 0px 0px 0px 0px inset;
+			cursor: pointer;
+			z-index: 10;
+			text-transform: none;
+			text-shadow: none;
+			font-weight: 700;
+			line-height: 1em;
+			font-style: normal;
+			text-align: center;
+			text-decoration: none;
+			border-radius: .28571429rem;
+			font-size: 0.8rem !important;
+			display: inline-block !important;
+			padding-block: 1px;
+			padding-inline: 6px;
+			margin: 0 .25em 0 0
+		}
+		
+		.codecopy-btn icon {
+			font-weight: 0.8rem !important
+		}
+		
+		.codecopy-btn:active {
+			background-color: rgb(186, 187, 188);
+			color: rgba(0, 0, 0, 0.9)
+		}
+		
+		.codecopy-btn:hover {
+			background: #fff;
+			transform: translateY(-1px);
+			background-color: rgb(202, 203, 205);
+			box-shadow: transparent 0px 0px 0px 1px inset, rgba(34, 36, 38, 0.15) 0px 0px 0px 0px inset;
+			color: rgba(0, 0, 0, 0.8)
+		}
+		
+		.codecopy-btn:focus {
+			background-color: rgb(202, 203, 205);
+			color: rgba(0, 0, 0, 0.8)
+		}
+		
+		@font-face {
+			font-family: 'Caveat';
+			src: url('https://jsd-proxy.ygxz.in/gh/googlefonts/caveat/fonts/ttf/Caveat-Regular.ttf') format('truetype');
+			font-weight: 400;
+			font-style: normal;
+			font-display: swap
+		}
+		
+		.welcome-container {
+			display: flex;
+			gap: 20px;
+			margin-bottom: 20px
+		}
+		
+		.welcome-ad {
+			flex: 1;
+			padding: 20px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 150px;
+			margin-top: -40px
+		}
+		
+		.welcome-checkin {
+			width: 300px;
+			background: #fff;
+			border-radius: 20px;
+			padding: 20px
+		}
+		
+		.checkin-animation {
+			width: 100%;
+			height: 100px;
+			background: url('https://cdn.iocdn.cc/npm/emoji-datasource-apple@7.0.2/img/apple/64/1f381.png') center/contain no-repeat;
+			margin: 10px 0
+		}
+		
+		.sidebar-toggle {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			cursor: pointer;
+			font-size: 20px
+		}
+		
+		.login-modal .form-group {
+			margin-bottom: 20px
+		}
+		
+		.login-modal .form-input {
+			padding: 10px;
+			margin-bottom: 10px
+		}
+		
+		.checkin-streak {
+			display: flex;
+			justify-content: center;
+			gap: 5px;
+			margin-top: 15px
+		}
+		
+		.streak-day {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background: #e2e8f0
+		}
+		
+		.streak-day.active {
+			background: #f39c12
+		}
+		
+		.checkin-rewards {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 15px
+		}
+		
+		.reward-item {
+			text-align: center;
+			font-size: 12px
+		}
+		
+		.checkin-progress {
+			height: 10px;
+			background: #e2e8f0;
+			border-radius: 5px;
+			margin-top: 15px;
+			overflow: hidden
+		}
+		
+		.progress-bar {
+			height: 100%;
+			background: #f39c12;
+			width: 0%
+		}
+	</style>
+	<style>
+		.carousel-container {
+			position: relative;
+			width: 100%;
+			/* max-width: 880px; */
+			margin: 0 auto 20px;
+			overflow: hidden;
+			border-radius: 8px;
+		}
+		
+		.carousel-images {
+			display: flex;
+			transition: transform 0.5s ease-in-out;
+		}
+		
+		.carousel-images a {
+			flex-shrink: 0;
+			width: 100%;
+		}
+		
+		.carousel-images img {
+			width: 100%;
+			height: auto;
+			display: block;
+		}
+		
+		.carousel-indicators {
+			position: absolute;
+			bottom: 10px;
+			left: 50%;
+			transform: translateX(-50%);
+			display: flex;
+			gap: 8px;
+		}
+		
+		.carousel-indicator {
+			width: 10px;
+			height: 10px;
+			background-color: rgba(255, 255, 255, 0.5);
+			border-radius: 50%;
+			cursor: pointer;
+		}
+		
+		.carousel-indicator.active {
+			background-color: white;
+		}
+		
+		.carousel-btn {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			background-color: rgba(0, 0, 0, 0.5);
+			color: white;
+			border: none;
+			padding: 10px;
+			cursor: pointer;
+			z-index: 10;
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+		}
+		
+		.carousel-btn.prev {
+			left: 10px;
+		}
+		
+		.carousel-btn.next {
+			right: 10px;
+		}
+		
+		.hljs-ln-numbers {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			text-align: center;
+			color: #ccc;
+			border-right: 1px solid #ccc !important;
+			vertical-align: top;
+			padding-right: 8px !important;
+		}
+		
+		.hljs-ln-code {
+			padding-left: 20px !important;
+		}
+		
+		.hljs-prt {
+			border-radius: 1em;
+		}
+		
+		code table,
+		code th,
+		code td,
+		code tr {
+			border: none !important;
+			padding: 0 !important;
+		}
+		
+		.hljs-ln {
+			margin-left: -10px;
+			background-color: #f8fafc;
+			box-shadow: none;
+		}
+		
+		.hljs-ln-n::before {
+			color: #666;
+		}
+		
+		.user-avatar {
+		    width: 40px;
+		    height: 40px;
+		    border-radius: 50%;
+		    object-fit: cover;
+		    cursor: pointer;
+		    border: 2px solid #ddd;
+		    transition: opacity 0.3s ease;
+		}
+		.user-avatar:hover {
+		    opacity: 0.8;
+		}
+		
+		.profile-panel {
+		    position: fixed;
+		    top: 0;
+			margin-top: 74px;
+		    right: -350px;
+		    width: 300px;
+		    height: 100%;
+		    background-color: #fff;
+		    box-shadow: -2px 0 100px rgba(0,0,0,0.1);
+    		border-radius: 20px;
+		    z-index: 1001;
+		    transition: right 0.3s ease-in-out;
+		    overflow-y: auto;
+		}
+		
+		.profile-panel.open {
+		    right: 0;
+		}
+		
+		.profile-panel-content {
+		    padding: 20px;
+		}
+		
+		.profile-header {
+		    text-align: center;
+		    margin-bottom: 20px;
+		    padding-bottom: 15px;
+		    border-bottom: 1px solid #eee;
+		}
+		
+		.panel-avatar {
+		    width: 80px;
+		    height: 80px;
+		    border-radius: 50%;
+		    object-fit: cover;
+		    margin-bottom: 10px;
+		    border: 2px solid #ddd;
+		}
+		
+		.profile-info p {
+		    margin: 10px 0;
+		    line-height: 1.5;
+		}
+		
+		.profile-actions {
+		    margin-top: 20px;
+		    display: flex;
+		    flex-direction: column;
+		    gap: 10px;
+		}
+		
+		#editBioInput {
+		    height: 80px;
+		    resize: vertical;
+		}
+		.form-text.text-muted {
+		    display: block;
+		    margin-top: 5px;
+		    font-size: 0.8em;
+		    color: #6c757d;
+		}
+	</style>
+</head>
+<body>
+	<header class="header">
+		<div class="logo">SnakeBloc Community</div>
+		<div class="auth-section" id="authSection">
+			<button class="btn original" onclick="showLoginModal()"><i class="fas fa-sign-in-alt"></i> 登录</button>
+			<img id="userAvatar" class="user-avatar" src="" alt="User Avatar" onclick="toggleUserProfilePanel()" style="display:none;">
+		</div>
+	</header>
+	<div class="sidebar" id="sidebar">
+		<div class="sidebar-item" onclick="navigateTo('/')"><i class="fas fa-home"></i><span>首页</span></div>
+		<div class="sidebar-item" onclick="navigateTo('/public')"><i class="fas fa-comments"></i><span>公共讨论</span></div>
+		<div class="sidebar-item" onclick="navigateTo('/groups')"><i class="fas fa-users"></i><span>我的群组</span></div>
+		<div class="sidebar-item" onclick="showCreateGroupModal()"><i class="fas fa-plus-circle"></i><span>创建群组</span>
+		</div>
+		<div class="sidebar-item" onclick="navigateTo('/articles')"><i class="fas fa-book"></i><span>公开文章</span></div>
+		<div class="sidebar-item" onclick="navigateTo('/drafts')"><i class="fas fa-file-alt"></i><span>我的文章</span></div>
+		<div class="sidebar-item" onclick="showCreateArticleModal()"><i class="fas fa-edit"></i><span>写文章</span></div>
+		<div class="sidebar-item hidden" id="adminLink" onclick="navigateTo('/admin')"><i class="fas fa-cog"></i><span>管理面板</span></div>
+	</div>
+	<div class="container">
+		<div class="main-content">
+			<div class="content-area" id="contentArea">
+				<div id="homePage" class="page">
+					<div class="welcome-container">
+						<div class="welcome-ad" id="welcomeAd">
+							<div class="carousel-container">
+								<div class="carousel-images"></div>
+								<button class="carousel-btn prev"><i class="fas fa-chevron-left" style="font-size: 17px;"></i></button>
+								<button class="carousel-btn next"><i class="fas fa-chevron-right" style="font-size: 17px;"></i></button>
+								<div class="carousel-indicators"></div>
+							</div>
+						</div>
+						<div class="welcome-checkin">
+							<div class="card-title">每日签到</div>
+							<div class="checkin-animation" id="checkinAnimation"></div>
+							<div class="checkin-streak" id="checkinStreak"></div>
+							<div class="checkin-progress">
+								<div class="progress-bar" id="progressBar"></div>
+							</div>
+							<div class="checkin-rewards">
+								<div class="reward-item">1天<br><span class="snake-coin">+5</span></div>
+								<div class="reward-item">3天<br><span class="snake-coin">+10</span></div>
+								<div class="reward-item">7天<br><span class="snake-coin">+20</span></div>
+							</div>
+							<button class="btn original checkin-btn" id="checkinBtn" onclick="checkIn()" style="width:100%;margin-top:10px">每日签到</button>
+						</div>
+					</div>
+					<div class="card" style="box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);">
+						<div class="card-title"><i class="fas fa-bullhorn"></i> 公告</div>
+						<div class="card-content">
+							<h3>欢迎来到 SnakeBloc Community！</h3>
+							<p>SnakeBloc Community 是 <a href="https://hydro.ac/d/Snake/">Snake</a> 集团的在线社区。</p>
+							<p>由于此网站只面向 <a href="https://hydro.ac/d/Snake/">Snake</a> 集团成员，所以注册功能 <span style="color:#ff4040">已禁用</span>，如果您是集团成员，请 <a href="https://www.luogu.com.cn/chat?uid=1393230">私信 zhangyimin12345</a>，发送邮箱、账户密码、用户名，zhangyimin12345 将会为您手动注册账号。</p>
+							<p>由于网站建立不久，正处在活跃更新的阶段，网站不定期更新，请备份好自己的数据以免网站遭到攻击、更新错误时丢失。（目前还好）</p>
+							<p>样式框架版本：ver3.35，JavaScript版本：ver5.72</p>
+						</div>
+					</div>
+					<div class="card" style="box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);">
+						<div class="card-title"><i class="fas fa-comments"></i> 最新公共讨论</div>
+						<div class="card-content" id="latestPublicDiscussions">加载中...</div>
+					</div>
+				</div>
+				<div id="publicPage" class="page hidden">
+					<div class="card">
+						<div class="card-title"><i class="fas fa-comments"></i> 公共讨论区</div>
+						<div class="card-content">
+							<div class="form-group">
+								<textarea class="form-textarea" id="publicMessageInput" placeholder="输入您的讨论内容（支持Markdown、KaTeX和代码高亮）"></textarea>
+							</div>
+							<div class="form-group">
+								<button class="btn secondary" onclick="sendPublicMessage()"><i class="fas fa-paper-plane"></i> 发送消息</button>
+								<button class="btn secondary" onclick="sendRedPacket('public')"><i class="fas fa-gift"></i> 发红包</button>
+							</div>
+							<div class="markdown-preview" id="publicMessagePreview"></div>
+						</div>
+					</div>
+					<div class="message-list" id="publicMessageList">
+						<div class="message-item">加载中...</div>
+					</div>
+				</div>
+				<div id="groupsPage" class="page hidden">
+					<div class="card">
+						<div class="card-title"><i class="fas fa-users"></i> 我的群组</div>
+						<div class="card-content">
+							<div class="group-list" id="groupList">加载中...</div>
+						</div>
+					</div>
+				</div>
+				<div id="groupPage" class="page hidden">
+					<div class="card">
+						<div class="card-title" id="groupTitle"><i class="fas fa-comments"></i> 群组讨论</div>
+						<div class="card-content">
+							<div class="form-group">
+								<textarea class="form-textarea" id="groupMessageInput" placeholder="输入您的讨论内容（支持Markdown、KaTeX和代码高亮）"></textarea>
+							</div>
+							<div class="form-group">
+								<button class="btn secondary" onclick="sendGroupMessage()"><i class="fas fa-paper-plane"></i> 发送消息</button>
+								<button class="btn secondary" onclick="sendRedPacket('group')"><i class="fas fa-gift"></i> 发红包</button>
+							</div>
+							<div class="markdown-preview" id="groupMessagePreview"></div>
+						</div>
+					</div>
+					<div class="message-list" id="groupMessageList">
+						<div class="message-item">加载中...</div>
+					</div>
+				</div>
+				<div id="articlesPage" class="page hidden">
+					<div class="card">
+						<div class="card-title"><i class="fas fa-book"></i> 文章列表</div>
+						<div class="card-content" id="articleList">加载中...</div>
+					</div>
+				</div>
+				<div id="articlePage" class="page hidden">
+					<div class="card">
+						<div class="card-title" id="articleTitle"></div>
+						<div class="card-content" id="articleContent"></div>
+					</div>
+				</div>
+				<div id="draftsPage" class="page hidden">
+					<div class="card">
+						<div class="card-title"><i class="fas fa-file-alt"></i> 我的文章</div>
+						<div class="card-content" id="draftList">加载中...</div>
+					</div>
+				</div>
+				<div id="adminPage" class="page hidden">
+					<div class="card">
+						<div class="card-title"><i class="fas fa-cog"></i> 管理面板</div>
+						<div class="card-content">
+							<div class="admin-panel">
+								<div class="admin-section">
+									<div class="admin-title">文章审核</div>
+									<div style="border-radius:15px;width:100%;box-shadow:0 4px 6px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow-x:auto;margin:2rem 0;box-sizing:inherit;">
+										<table class="admin-table">
+											<thead>
+												<tr>
+													<th>标题</th>
+													<th>作者</th>
+													<th>提交时间</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody id="articleReviewList"></tbody>
+										</table>
+									</div>
+								</div>
+								<div class="admin-section" style="display:none">
+									<div class="admin-title">用户管理</div>
+									<div style="border-radius:15px;width:100%;box-shadow:0 4px 6px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow-x:auto;margin:2rem 0;box-sizing:inherit;">
+										<table class="admin-table">
+											<thead>
+												<tr>
+													<th>用户名</th>
+													<th>注册时间</th>
+													<th>状态</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody id="userManagementList"></tbody>
+										</table>
+									</div>
+								</div>
+								<div class="admin-section">
+									<div class="admin-title">群组管理</div>
+									<div style="border-radius:15px;width:100%;box-shadow:0 4px 6px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow-x:auto;margin:2rem 0;box-sizing:inherit;">
+										<table class="admin-table">
+											<thead>
+												<tr>
+													<th>群组名称</th>
+													<th>创建者</th>
+													<th>成员数</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody id="groupManagementList"></tbody>
+										</table>
+									</div>
+								</div>
+								<div class="admin-section">
+									<div class="admin-title">内容管理</div>
+									<div style="border-radius:15px;width:100%;box-shadow:0 4px 6px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow-x:auto;margin:2rem 0;box-sizing:inherit;">
+										<table class="admin-table">
+											<thead>
+												<tr>
+													<th>内容</th>
+													<th>作者</th>
+													<th>类型</th>
+													<th>时间</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody id="contentManagementList"></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="userProfilePanel" class="profile-panel">
+		<div class="profile-panel-content">
+			<div class="profile-header">
+				<img id="panelUserAvatar" class="panel-avatar" src="" alt="User Avatar">
+				<h2 id="panelUsername"></h2>
+			</div>
+			<div class="profile-info">
+				<p><strong>蛇币:</strong> <span id="panelSnakeCoin"></span></p>
+				<p><strong>个性签名:</strong> <span id="panelBio"></span></p>
+				<p><strong>注册日期:</strong> <span id="panelCreatedAt"></span></p>
+				<p><strong>最后上线:</strong> <span id="panelLastSeen"></span></p>
+				<div class="profile-actions">
+					<button class="btn secondary" onclick="openEditProfileModal()">编辑资料</button>
+					<button class="btn danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i> 退出登录</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="editProfileModal">
+		<div class="modal-content">
+			<div class="modal-title"><i class="fas fa-user-edit"></i> 编辑资料</div>
+			<div class="form-group">
+				<label class="form-label">用户名 (每月限改一次)</label>
+				<input type="text" class="form-input" id="editUsernameInput" placeholder="用户名">
+				<small id="usernameChangeInfo" class="form-text text-muted"></small>
+			</div>
+			<div class="form-group">
+				<label class="form-label">个性签名 (每月限改一次)</label>
+				<textarea class="form-input" id="editBioInput" placeholder="写点什么介绍自己吧..."></textarea>
+				<small id="bioChangeInfo" class="form-text text-muted"></small>
+			</div>
+			<div class="form-group">
+				<label class="form-label">头像 URL</label>
+				<input type="text" class="form-input" id="editAvatarUrlInput" placeholder="头像图片链接">
+				<!-- 或者实现文件上传功能 -->
+			</div>
+			<div class="modal-footer">
+				<button class="btn danger" onclick="hideModal('editProfileModal')">取消</button>
+				<button class="btn original" onclick="saveProfileChanges()">保存</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="loginModal">
+		<div class="modal-content login-modal">
+			<form id="loginForm" onsubmit="handleLoginFormSubmit(event)">
+				<div class="modal-title"><i class="fas fa-sign-in-alt"></i> 登录</div>
+				<div class="form-group">
+					<input type="text" class="form-input" id="usernameInput" required placeholder="用户名">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-input" id="passwordInput" required placeholder="密码">
+				</div>
+				<div class="modal-footer">
+					<button class="btn danger" onclick="hideModal('loginModal')">取消</button>
+					<button class="btn original">登录</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal" id="createGroupModal">
+		<div class="modal-content">
+			<div class="modal-title"><i class="fas fa-users"></i> 创建新群组</div>
+			<div class="form-group">
+				<label class="form-label">群组名称</label>
+				<input type="text" class="form-input" id="groupNameInput">
+			</div>
+			<div class="form-group">
+				<label class="form-label">邀请成员 (用户名, 多个用逗号分隔)</label>
+				<input type="text" class="form-input" id="groupMembersInput">
+			</div>
+			<div class="modal-footer">
+				<button class="btn danger" onclick="hideModal('createGroupModal')">取消</button>
+				<button class="btn original" onclick="createGroup()">创建</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="createArticleModal">
+		<div class="modal-content">
+			<div class="modal-title"><i class="fas fa-edit"></i> 创建新文章</div>
+			<div class="form-group">
+				<label class="form-label">文章标题</label>
+				<input type="text" class="form-input" id="articleTitleInput">
+			</div>
+			<div class="form-group">
+				<label class="form-label">文章内容 (Markdown格式)</label>
+				<textarea class="form-textarea" id="articleContentInput"></textarea>
+			</div>
+			<div class="markdown-preview" id="articlePreview"></div>
+			<div class="modal-footer">
+				<button class="btn danger" onclick="hideModal('createArticleModal')">取消</button>
+				<button class="btn secondary" onclick="saveDraft()">保存文章</button>
+				<button class="btn original" onclick="submitArticle()">提交审核</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="editArticleModal">
+		<div class="modal-content">
+			<div class="modal-title"><i class="fas fa-edit"></i> 编辑文章</div>
+			<div class="form-group">
+				<label class="form-label">文章标题</label>
+				<input type="text" class="form-input" id="editArticleTitleInput">
+			</div>
+			<div class="form-group">
+				<label class="form-label">文章内容 (Markdown格式)</label>
+				<textarea class="form-textarea" id="editArticleContentInput"></textarea>
+			</div>
+			<div class="markdown-preview" id="editArticlePreview"></div>
+			<div class="modal-footer">
+				<button class="btn danger" onclick="hideModal('editArticleModal')">取消</button>
+				<button class="btn original" onclick="updateArticle()">更新文章</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="redPacketModal">
+		<div class="modal-content">
+			<div class="modal-title"><i class="fas fa-gift"></i> 发送红包</div>
+			<div class="form-group">
+				<label class="form-label">蛇币金额</label>
+				<input type="number" class="form-input" id="redPacketAmount">
+			</div>
+			<div class="form-group">
+				<label class="form-label">红包描述</label>
+				<input type="text" class="form-input" id="redPacketDesc" placeholder="恭喜发财，大吉大利">
+			</div>
+			<div class="form-group">
+				<label class="form-label">红包数量</label>
+				<input type="number" class="form-input" id="redPacketCount" value="1" min="1">
+			</div>
+			<div class="modal-footer">
+				<button class="btn danger" onclick="hideModal('redPacketModal')">取消</button>
+				<button class="btn original" onclick="confirmSendRedPacket()">发送</button>
+			</div>
+		</div>
+	</div>
+	<div id="previewModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-title" id="previewTitle"></div>
+			<div class="modal-body">
+				<div id="previewContent"></div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn secondary" onclick="hideModal('previewModal')">关闭</button>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.iocdn.cc/npm/@supabase/supabase-js@2"></script>
+	<script src="https://cdn.iocdn.cc/npm/marked@4.0.0/marked.min.js"></script>
+	<script src="https://cdn.iocdn.cc/npm/katex@0.16.8/dist/katex.min.js"></script>
+	<script src="https://cdn.iocdn.cc/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+	<script src="https://jsd-proxy.ygxz.in/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+	<script src="https://jsd-proxy.ygxz.in/gh/highlightjs/cdn-release@11.9.0/build/languages/markdown.min.js"></script>
+	<script src="https://cdn.iocdn.cc/npm/moment@2.29.4/min/moment.min.js"></script>
+	<script src="https://cdn.iocdn.cc/npm/moment@2.29.4/min/locales.min.js"></script>
+	<script src="https://cdn.iocdn.cc/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+	<script src="https://cdn.iocdn.cc/npm/sweetalert2@11"></script>
+	<script src="https://cdn.iocdn.cc/npm/highlightjs-line-numbers.js@2.9.0/dist/highlightjs-line-numbers.min.js"></script>
+	<script>
+		const supabaseUrl = 'https://rruioupxqqovjskdxbsz.supabase.co';
+		const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydWlvdXB4cXFvdmpza2R4YnN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MDMxMjAsImV4cCI6MjA2OTI3OTEyMH0.is1Y3XVBu_mXyDKUjEoGhJtzzncD0wtcSrqLcnfm24c';
+		const { createClient } = supabase;
+		const supabaseClient = createClient(supabaseUrl, supabaseKey);
+		
+		let currentUser = null;
+		let currentGroup = null;
+		let currentArticle = null;
+		let redPacketContext = null;
+		let checkinStreak = 0;
+		let userProfilePanelOpen = false;
+		let currentUserProfileData = null;
+		
+		document.addEventListener('DOMContentLoaded', function () {
+			marked.setOptions({
+				breaks: true,
+				highlight: function (code, lang) {
+					if (lang && hljs.getLanguage(lang)) {
+						return hljs.highlight(lang, code).value;
+					}
+					return hljs.highlightAuto(code).value;
+				}
+			});
+		
+			document.getElementById('publicMessageInput').addEventListener('input', updatePublicPreview);
+			document.getElementById('groupMessageInput').addEventListener('input', updateGroupPreview);
+			document.getElementById('articleContentInput').addEventListener('input', updateArticlePreview);
+			document.getElementById('editArticleContentInput').addEventListener('input', updateEditArticlePreview);
+		
+			checkLoginStatus();
+			updateCheckinUI();
+		
+			const sidebar = document.getElementById('sidebar');
+			const contentArea = document.getElementById('contentArea');
+		
+			function expandSidebar() {
+				if (sidebar) {
+					sidebar.classList.add('expanded');
+				}
+				if (contentArea) {
+					contentArea.classList.add('expanded');
+				}
+			}
+		
+			function collapseSidebar() {
+				if (sidebar) {
+					sidebar.classList.remove('expanded');
+				}
+				if (contentArea) {
+					contentArea.classList.remove('expanded');
+				}
+			}
+		
+			if (sidebar) {
+				sidebar.addEventListener('touchstart', function (event) {
+					expandSidebar();
+				});
+		
+				sidebar.addEventListener('touchend', function (event) {
+					collapseSidebar();
+				});
+		
+				sidebar.addEventListener('touchleave', function (event) {
+					collapseSidebar();
+				});
+		
+				sidebar.addEventListener('touchcancel', function (event) {
+					collapseSidebar();
+				});
+			}
+		
+			window.addEventListener('popstate', function (event) {
+				console.log("Navigated to:", window.location.pathname, "State:", event.state);
+				handleRoute(window.location.pathname, event.state);
+			});
+		});
+		
+		document.addEventListener('DOMContentLoaded', function () {
+			const sidebar = document.getElementById('sidebar');
+			const contentArea = document.getElementById('contentArea');
+		
+			if (sidebar) {
+				sidebar.addEventListener('mouseenter', function () {
+					sidebar.classList.add('expanded');
+				});
+		
+				sidebar.addEventListener('mouseleave', function () {
+					sidebar.classList.remove('expanded');
+				});
+			}
+		});
+		
+		function showLoginModal() {
+			document.getElementById('usernameInput').value = '';
+			document.getElementById('passwordInput').value = '';
+			showModal('loginModal');
+		}
+		
+		async function checkLoginStatus() {
+			const { data: { user }, error } = await supabaseClient.auth.getUser();
+			if (user) {
+				const { data, error } = await supabaseClient.from('profiles').select('*').eq('id', user.id).single();
+				if (data) {
+					currentUser = {
+						id: user.id,
+						username: data.username,
+						role: data.role,
+						snake_coin: data.snake_coin,
+						last_checkin: data.last_checkin,
+						checkin_streak: data.checkin_streak || 0,
+						avatar_url: data.avatar_url,
+						bio: data.bio, 
+						last_seen: data.last_seen,
+						last_username_change: data.last_username_change,
+						last_bio_change: data.last_bio_change 
+					};
+					updateUIAfterLogin();
+					checkCheckinStatus();
+				}
+			}
+			handleRoute();
+		}
+		
+		async function showUserInfo(userId) {
+		    // document.getElementById('infoUserMessages').innerHTML = '<li>加载中...</li>';
+		    showModal('userInfoModal');
+		
+		    try {
+		        const { data: userData, error: userError } = await supabaseClient
+		            .from('profiles')
+		            .select('username, avatar_url, role, bio, created_at')
+		            .eq('id', userId)
+		            .single();
+		
+		        if (userError) throw userError;
+		
+		        document.getElementById('infoUserAvatar').src = userData.avatar_url || 'https://cdn.iocdn.cc/npm/admin-lte@3.2.0/dist/img/user2-160x160.jpg';
+		        document.getElementById('infoUsername').textContent = userData.username;
+		        document.getElementById('infoUserRole').textContent = userData.role === 'admin' ? '管理员' : '普通用户';
+		        document.getElementById('infoUserBio').textContent = userData.bio || '暂无签名';
+		        document.getElementById('infoUserCreatedAt').textContent = moment(userData.created_at).format('YYYY-MM-DD');
+		
+		        const { data: messagesData, error: messagesError } = await supabaseClient
+		            .from('public_messages')
+		            .select('id, content, created_at')
+		            .eq('user_id', userId)
+		            .order('created_at', { ascending: false })
+		            .limit(5);
+		
+		        const messagesList = document.getElementById('infoUserMessages');
+		        messagesList.innerHTML = '';
+		
+		        if (messagesError) {
+		            console.error("加载用户消息失败:", messagesError);
+		            messagesList.innerHTML = '<li>加载消息失败</li>';
+		            return;
+		        }
+		
+		        if (!messagesData || messagesData.length === 0) {
+		            messagesList.innerHTML = '<li>该用户暂无公共消息</li>';
+		            return;
+		        }
+		
+		        messagesData.forEach(msg => {
+		            const li = document.createElement('li');
+		            li.innerHTML = `<strong>${moment(msg.created_at).format('MM-DD HH:mm')}:</strong> ${escapeHtml(msg.content.substring(0, 100))}${msg.content.length > 100 ? '...' : ''}`;
+		            messagesList.appendChild(li);
+		        });
+		
+		    } catch (err) {
+		        console.error("获取用户信息失败:", err);
+		        document.getElementById('userInfoModal').querySelector('.user-info-content').innerHTML = '<p>加载用户信息失败</p>';
+		        showToast('获取用户信息失败', 'error');
+		    }
+		}
+		
+		function escapeHtml(unsafe) {
+		    return unsafe
+		         .replace(/&/g, "&amp;")
+		         .replace(/</g, "<")
+		         .replace(/>/g, ">")
+		         .replace(/"/g, "&quot;")
+		         .replace(/'/g, "&#039;");
+		}
+		
+		async function updateLastSeen() {
+		    if (!currentUser) return;
+		    try {
+		        const { error } = await supabaseClient
+		            .from('profiles')
+		            .update({ last_seen: new Date().toISOString() })
+		            .eq('id', currentUser.id);
+		
+		        if (error) {
+		            console.warn("更新最后上线时间失败:", error);
+		        }
+		    } catch (err) {
+		        console.warn("更新最后上线时间异常:", err);
+		    }
+		}
+		
+		async function handleLoginFormSubmit(event) {
+			event.preventDefault();
+		
+			const username = document.getElementById('usernameInput').value.trim();
+			const password = document.getElementById('passwordInput').value.trim();
+		
+			const loginButton = document.getElementById('loginButton');
+			let originalButtonText = '登录';
+			if (loginButton) {
+				originalButtonText = loginButton.innerHTML;
+				loginButton.disabled = true;
+				loginButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 登录中...';
+				loginButton.style.pointerEvents = 'none';
+				loginButton.style.opacity = '0.7';
+				loginButton.blur();
+			}
+		
+			try {
+				await performLogin(username, password);
+			} catch (error) {
+				console.error("登录流程出错:", error);
+			} finally {
+				if (loginButton) {
+					setTimeout(() => {
+						const currentLoginButton = document.getElementById('loginButton');
+						if (currentLoginButton) {
+							currentLoginButton.disabled = false;
+							currentLoginButton.innerHTML = originalButtonText;
+							currentLoginButton.style.pointerEvents = 'auto';
+							currentLoginButton.style.opacity = '1';
+						}
+					}, 100);
+				}
+			}
+		}
+		
+		async function performLogin(username, password) {
+			if (!username || !password) {
+				showToast('请输入用户名和密码', 'error');
+				throw new Error('用户名或密码为空');
+			}
+		
+			const { data: userData, error: userError } = await supabaseClient.from('profiles').select('*').eq('username', username).single();
+			if (userError || !userData) {
+				showToast('用户不存在', 'error');
+				throw new Error('用户不存在');
+			}
+		
+			const { data, error } = await supabaseClient.auth.signInWithPassword({
+				email: userData.email,
+				password: password
+			});
+			if (error) {
+				showToast('登录失败: ' + error.message, 'error');
+				throw error;
+			}
+		
+			currentUser = {
+				id: data.user.id,
+				username: userData.username,
+				role: userData.role,
+				snake_coin: userData.snake_coin,
+				last_checkin: userData.last_checkin,
+				checkin_streak: userData.checkin_streak || 0
+			};
+		
+			updateUIAfterLogin();
+			showToast('登录成功', 'success');
+			checkCheckinStatus();
+			hideModal('loginModal');
+		}
+		
+		async function login() {
+			const loginForm = document.getElementById('loginForm');
+			if (loginForm) {
+				const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+				loginForm.dispatchEvent(submitEvent);
+			} else {
+				console.error("登录表单未找到，无法执行登录");
+				showToast('页面错误，无法登录', 'error');
+			}
+		}
+		
+		async function updateUIAfterLogin() {
+		    if (!currentUser) {
+		        console.error("updateUIAfterLogin called but currentUser is null");
+		        return;
+		    }
+		
+		    const authSection = document.getElementById('authSection');
+		    const userAvatar = document.getElementById('userAvatar');
+		    authSection.innerHTML = '';
+		    userAvatar.style.display = 'block';
+		    userAvatar.src = currentUser.avatar_url || 'https://cdn.iocdn.cc/npm/admin-lte@3.2.0/dist/img/user2-160x160.jpg';
+		    userAvatar.alt = `Avatar of ${currentUser.username}`;
+		    userAvatar.title = currentUser.username;
+		    authSection.appendChild(userAvatar);
+		    // const usernameSpan = document.createElement('span');
+		    // usernameSpan.id = 'usernameDisplay';
+		    // usernameSpan.className = 'username-display';
+		    // usernameSpan.textContent = currentUser.username;
+		    // usernameSpan.onclick = toggleUserProfilePanel;
+		    // authSection.appendChild(usernameSpan);
+		    try {
+		        const { data, error } = await supabaseClient
+		            .from('profiles')
+		            .select('username, avatar_url, bio, snake_coin, created_at, last_seen, last_username_change, last_bio_change')
+		            .eq('id', currentUser.id)
+		            .single();
+		
+		        if (error) throw error;
+		
+		        currentUserProfileData = data;
+		        currentUser.snake_coin = data.snake_coin;
+		        if (userProfilePanelOpen) {
+		            populateUserProfilePanel();
+		        }
+		        // showToast(`欢迎回来, ${currentUser.username}!`, 'success');
+		
+		    } catch (err) {
+		        console.error("加载用户详细信息失败:", err);
+		        showToast('加载用户信息失败', 'error');
+		    }
+		
+		    if (currentUser.role === 'admin') {
+		        document.getElementById('adminLink').classList.remove('hidden');
+		    } else {
+		        document.getElementById('adminLink').classList.add('hidden');
+		    }
+		    loadPublicDiscussions();
+		    loadGroups();
+		    loadArticles();
+		    updateCheckinUI();
+		}
+		
+		function toggleUserProfilePanel() {
+		    const panel = document.getElementById('userProfilePanel');
+		    userProfilePanelOpen = !userProfilePanelOpen;
+		    if (userProfilePanelOpen) {
+		        panel.classList.add('open');
+		        if (!currentUserProfileData) {
+		             loadAndPopulateUserProfilePanel();
+		        } else {
+		            populateUserProfilePanel(); 
+		        }
+		    } else {
+		        panel.classList.remove('open');
+		    }
+		}
+		
+		async function loadAndPopulateUserProfilePanel() {
+		    if (!currentUser) return;
+		
+		    try {
+		        const { data, error } = await supabaseClient
+		            .from('profiles')
+		            .select('username, avatar_url, bio, snake_coin, created_at, last_seen, last_username_change, last_bio_change')
+		            .eq('id', currentUser.id)
+		            .single();
+		
+		        if (error) throw error;
+		
+		        currentUserProfileData = data;
+		        currentUser.snake_coin = data.snake_coin; 
+		        populateUserProfilePanel();
+		    } catch (err) {
+		        console.error("加载用户面板信息失败:", err);
+		        showToast('加载个人信息失败', 'error');
+		    }
+		}
+		
+		function populateUserProfilePanel() {
+		    if (!currentUserProfileData) return;
+		
+		    document.getElementById('panelUserAvatar').src = currentUserProfileData.avatar_url || 'https://cdn.iocdn.cc/npm/admin-lte@3.2.0/dist/img/user2-160x160.jpg';
+		    document.getElementById('panelUsername').textContent = currentUserProfileData.username;
+		    document.getElementById('panelSnakeCoin').textContent = currentUserProfileData.snake_coin;
+		    document.getElementById('panelBio').textContent = currentUserProfileData.bio || '这个用户很懒，什么都没写。';
+		    document.getElementById('panelCreatedAt').textContent = moment(currentUserProfileData.created_at).format('YYYY-MM-DD HH:mm');
+		    document.getElementById('panelLastSeen').textContent = currentUserProfileData.last_seen ? moment(currentUserProfileData.last_seen).format('YYYY-MM-DD HH:mm') : '刚刚'; // 或 '未知'
+		}
+		
+		function openEditProfileModal() {
+		    if (!currentUserProfileData) {
+		        showToast('用户信息未加载，请稍后重试', 'error');
+		        return;
+		    }
+		
+		    document.getElementById('editUsernameInput').value = currentUserProfileData.username;
+		    document.getElementById('editBioInput').value = currentUserProfileData.bio || '';
+		    document.getElementById('editAvatarUrlInput').value = currentUserProfileData.avatar_url || '';
+		
+		    const oneMonth = 30 * 24 * 60 * 60 * 1000;
+		    const now = new Date();
+		
+		    const usernameInfo = document.getElementById('usernameChangeInfo');
+		    const bioInfo = document.getElementById('bioChangeInfo');
+		
+		    if (currentUserProfileData.last_username_change) {
+		        const nextUsernameChange = new Date(currentUserProfileData.last_username_change).getTime() + oneMonth;
+		        if (nextUsernameChange > now.getTime()) {
+		            usernameInfo.textContent = `下次可修改时间: ${moment(nextUsernameChange).format('YYYY-MM-DD HH:mm')}`;
+		            usernameInfo.style.color = 'red';
+		            document.getElementById('editUsernameInput').disabled = true;
+		        } else {
+		            usernameInfo.textContent = '本月可以修改用户名';
+		            usernameInfo.style.color = 'green';
+		            document.getElementById('editUsernameInput').disabled = false;
+		        }
+		    } else {
+		        usernameInfo.textContent = '本月可以修改用户名';
+		        usernameInfo.style.color = 'green';
+		        document.getElementById('editUsernameInput').disabled = false;
+		    }
+		
+		    if (currentUserProfileData.last_bio_change) {
+		        const nextBioChange = new Date(currentUserProfileData.last_bio_change).getTime() + oneMonth;
+		        if (nextBioChange > now.getTime()) {
+		            bioInfo.textContent = `下次可修改时间: ${moment(nextBioChange).format('YYYY-MM-DD HH:mm')}`;
+		            bioInfo.style.color = 'red';
+		            document.getElementById('editBioInput').disabled = true;
+		        } else {
+		            bioInfo.textContent = '本月可以修改个性签名';
+		            bioInfo.style.color = 'green';
+		            document.getElementById('editBioInput').disabled = false;
+		        }
+		    } else {
+		        bioInfo.textContent = '本月可以修改个性签名';
+		        bioInfo.style.color = 'green';
+		        document.getElementById('editBioInput').disabled = false;
+		    }
+		
+		    showModal('editProfileModal');
+		}
+		
+		async function saveProfileChanges() {
+		    if (!currentUser) return;
+		
+		    const newUsername = document.getElementById('editUsernameInput').value.trim();
+		    const newBio = document.getElementById('editBioInput').value.trim();
+		    const newAvatarUrl = document.getElementById('editAvatarUrlInput').value.trim();
+		
+		    const updates = {};
+		
+		    let hasChanges = false;
+		    let hasRestrictedChange = false;
+		
+		    if (newUsername && newUsername !== currentUserProfileData.username) {
+		        if (document.getElementById('editUsernameInput').disabled) {
+		            showToast('用户名修改频率限制中', 'error');
+		            hasRestrictedChange = true;
+		        } else {
+		            updates.username = newUsername;
+		            hasChanges = true;
+		        }
+		    }
+		
+		    if (newBio !== (currentUserProfileData.bio || '')) {
+		        if (document.getElementById('editBioInput').disabled) {
+		            showToast('个性签名修改频率限制中', 'error');
+		            hasRestrictedChange = true;
+		        } else {
+		            updates.bio = newBio || null;
+		            hasChanges = true;
+		        }
+		    }
+		
+		    if (newAvatarUrl !== (currentUserProfileData.avatar_url || '')) {
+		        updates.avatar_url = newAvatarUrl || null;
+		        hasChanges = true;
+		    }
+		
+		    if (hasRestrictedChange) {
+		        return;
+		    }
+		
+		    if (!hasChanges) {
+		        showToast('没有修改任何内容', 'info');
+		        hideModal('editProfileModal');
+		        return;
+		    }
+		
+		    try {
+		        const { data, error } = await supabaseClient
+		            .from('profiles')
+		            .update(updates)
+		            .eq('id', currentUser.id)
+		            .select()
+		            .single();
+		
+		        if (error) throw error;
+		        showToast('资料更新成功', 'success');
+		        hideModal('editProfileModal');
+		        Object.assign(currentUserProfileData, data);
+		        if (data.username !== undefined) currentUser.username = data.username;
+		        if (data.avatar_url !== undefined) currentUser.avatar_url = data.avatar_url;
+		        if (data.snake_coin !== undefined) currentUser.snake_coin = data.snake_coin;
+		        if (data.bio !== undefined) currentUser.bio = data.bio;
+		        if (data.last_username_change !== undefined) currentUser.last_username_change = data.last_username_change;
+		        if (data.last_bio_change !== undefined) currentUser.last_bio_change = data.last_bio_change;
+		        updateUIAfterLogin();
+		
+		    } catch (err) {
+		        console.error("更新资料失败:", err);
+		        showToast(`更新失败: ${err.message}`, 'error');
+		    }
+		}
+		
+		async function logout() {
+		    const { error } = await supabaseClient.auth.signOut();
+		    currentUser = null;
+		    currentUserProfileData = null;
+		    document.getElementById('authSection').innerHTML = `<button class="btn original" onclick="showLoginModal()"><i class="fas fa-sign-in-alt"></i> 登录</button>`;
+		    document.getElementById('adminLink').classList.add('hidden');
+		    showToast('已退出登录', 'success');
+		    showPage('home');
+		    updateCheckinUI();
+		    userProfilePanelOpen = false;
+		    document.getElementById('userProfilePanel').classList.remove('open');
+		}
+		
+		function updateCheckinUI() {
+			const streakContainer = document.getElementById('checkinStreak');
+			streakContainer.innerHTML = '';
+			for (let i = 0; i < 7; i++) {
+				const day = document.createElement('div');
+				day.className = 'streak-day';
+				if (currentUser && i < currentUser.checkin_streak) {
+					day.classList.add('active');
+				}
+				streakContainer.appendChild(day);
+			}
+			if (currentUser) {
+				document.getElementById('progressBar').style.width = `${Math.min(100, (currentUser.checkin_streak / 7) * 100)}%`;
+			}
+		}
+		
+		function checkCheckinStatus() {
+			if (!currentUser) return;
+			const today = new Date().toISOString().split('T')[0];
+			const lastCheckin = currentUser.last_checkin ? new Date(currentUser.last_checkin).toISOString().split('T')[0] : null;
+			if (lastCheckin !== today) {
+				document.getElementById('checkinBtn').textContent = '每日签到';
+				document.getElementById('checkinBtn').disabled = "";
+			} else {
+				document.getElementById('checkinBtn').textContent = '今日已签到';
+				document.getElementById('checkinBtn').disabled = "true";
+			}
+		}
+		
+		async function checkIn() {
+			if (!currentUser) return;
+			try {
+				const today = new Date().toISOString().split('T')[0];
+				const lastCheckin = currentUser.last_checkin ? new Date(currentUser.last_checkin).toISOString().split('T')[0] : null;
+		
+				if (lastCheckin === today) {
+					showToast('今天已经签到过了', 'error');
+					return;
+				}
+		
+				const yesterday = new Date();
+				yesterday.setDate(yesterday.getDate() - 1);
+				const yesterdayStr = yesterday.toISOString().split('T')[0];
+				const isConsecutive = lastCheckin === yesterdayStr;
+				const newStreak = isConsecutive ? (currentUser.checkin_streak || 0) + 1 : 1;
+		
+				let baseReward = Math.floor(Math.random() * 10) + 1;
+				let streakBonus = 0;
+				if (newStreak >= 7) {
+					streakBonus = 20;
+				} else if (newStreak >= 3) {
+					streakBonus = 10;
+				} else if (newStreak >= 1) {
+					streakBonus = 5;
+				}
+				const reward = baseReward + streakBonus;
+		
+				const { data, error } = await supabaseClient
+					.from('profiles')
+					.update({
+						snake_coin: currentUser.snake_coin + reward,
+						last_checkin: new Date().toISOString(),
+						checkin_streak: newStreak
+					})
+					.eq('id', currentUser.id)
+					.select()
+					.single();
+		
+				if (error) throw error;
+		
+				currentUser.snake_coin = data.snake_coin;
+				currentUser.last_checkin = data.last_checkin;
+				currentUser.checkin_streak = data.checkin_streak;
+		
+				document.getElementById('checkinBtn').textContent = '今日已签到';
+				document.getElementById('checkinBtn').disabled = true;
+				animateCheckin();
+				showToast(`签到成功，获得${reward}蛇币！连续签到${newStreak}天`, 'success');
+		
+				updateCheckinUI();
+		
+			} catch (error) {
+				console.error("签到失败:", error);
+				showToast('签到失败: ' + error.message, 'error');
+			}
+		}
+		
+		function animateCheckin() {
+			const animation = document.getElementById('checkinAnimation');
+			animation.style.backgroundImage = "url('https://cdn.iocdn.cc/npm/emoji-datasource-apple@7.0.2/img/apple/64/1f389.png')";
+			setTimeout(() => {
+				animation.style.backgroundImage = "url('https://cdn.iocdn.cc/npm/emoji-datasource-apple@7.0.2/img/apple/64/1f381.png')";
+			}, 5000);
+		}
+		
+		function showPage(pageId) {
+			document.querySelectorAll('.page').forEach(page => {
+				page.classList.add('hidden');
+			});
+		
+			const targetPage = document.getElementById(pageId + 'Page');
+			if (targetPage) {
+				targetPage.classList.remove('hidden');
+			}
+		
+			switch (pageId) {
+				case 'home':
+					startSlider();
+					if (window.location.pathname !== '/') {
+						history.replaceState({ page: 'home' }, '', '/'); // 使用 replaceState 避免在首页时产生额外历史记录
+					}
+					break;
+				case 'public':
+					stopSlider();
+					loadPublicDiscussions();
+					history.pushState({ page: 'public' }, '', '/public');
+					break;
+				case 'groups':
+					stopSlider();
+					loadGroups();
+					history.pushState({ page: 'groups' }, '', '/groups');
+					break;
+				case 'articles':
+					stopSlider();
+					loadArticles();
+					history.pushState({ page: 'articles' }, '', '/articles');
+					break;
+				case 'drafts':
+					stopSlider();
+					loadDrafts();
+					if (window.location.pathname !== '/drafts' && window.location.pathname !== '/article/mine') {
+						history.pushState({ page: 'drafts' }, '', '/drafts');
+					}
+					break;
+				case 'admin':
+					if (currentUser && currentUser.role === 'admin') {
+						stopSlider();
+						loadAdminData();
+						history.pushState({ page: 'admin' }, '', '/admin');
+					} else {
+						showToast('无权访问管理面板', 'error');
+						stopSlider();
+						showPage('home');
+					}
+					break;
+				default:
+					stopSlider();
+					console.warn(`Unknown page ID: ${pageId}`);
+					history.pushState({ page: pageId }, '', `/${pageId}`); // 为未知页面也生成一个 URL
+			}
+		}
+		
+		async function fetchPublicDiscussions() {
+			try {
+				const { data, error } = await supabaseClient.from('public_messages').select(`id,content,created_at,user_id,profiles:user_id(username),redpackets(id,amount,description,count,claimed_count,total_claimed_amount,redpacket_claims(user_id))`).order('created_at', { ascending: false });
+				if (error) throw error;
+				return data;
+			} catch (error) {
+				showToast('加载讨论失败: ' + error.message, 'error');
+				return [];
+			}
+		}
+		
+		function renderMessageList(data, containerId) {
+			const container = document.getElementById(containerId);
+			if (!container) return;
+			container.innerHTML = '';
+			data.forEach(message => {
+				const messageElement = createMessageElement(message, 'public');
+				container.appendChild(messageElement);
+			});
+		}
+		
+		async function loadPublicDiscussions() {
+			if (!document.getElementById('publicPage').classList.contains('hidden')) {
+				const data = await fetchPublicDiscussions();
+				renderMessageList(data, 'publicMessageList');
+			}
+			const data = await fetchPublicDiscussions();
+			const latest = data.slice(0, 5);
+			renderMessageList(latest, 'latestPublicDiscussions');
+		}
+		
+		function createMessageElement(message, type) {
+			const messageElement = document.createElement('div');
+			messageElement.className = 'message-item';
+			let redpacketHtml = '';
+			if (message.redpackets) {
+				const redpacket = message.redpackets;
+				const isClaimed = redpacket.claimed_count >= redpacket.count;
+				const userHasClaimed = message.redpackets.redpacket_claims?.some(claim => claim.user_id === currentUser?.id) || false;
+				const canClaim = currentUser && !isClaimed && !userHasClaimed;
+				const claimButtonHtml = canClaim ? `<button class="redpacket-btn" onclick="claimRedPacket('${redpacket.id}', '${type}')">领取红包</button>` : `<div class="redpacket-desc">${userHasClaimed ? '已领取' : '已领完'}</div>`;
+				redpacketHtml = `<div class="redpacket"><div class="redpacket-header"><span class="redpacket-sender">${message.profiles.username}的红包</span><span class="redpacket-amount">${redpacket.amount - (redpacket.total_claimed_amount || 0)}/${redpacket.amount}蛇币</span></div><div class="redpacket-desc">${redpacket.description || '恭喜发财，大吉大利'}</div>${claimButtonHtml}</div>`;
+				contentHtml = '';
+			} else {
+				contentHtml = marked.parse(message.content || '');
+			}
+			messageElement.innerHTML = `<div class="message-header"><span class="message-author">${message.profiles.username}</span><span class="message-time">${moment(message.created_at).fromNow()}</span></div><div class="message-content">${contentHtml}</div>${redpacketHtml}<div class="message-actions">${currentUser && (currentUser.id === message.user_id || currentUser.role === 'admin') ? `<span class="message-action" onclick="deleteMessage('${message.id}', '${type}')">删除</span>` : ''}</div>`;
+			enhanceElement(messageElement);
+			return messageElement;
+		}
+		
+		async function sendPublicMessage() {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			const content = document.getElementById('publicMessageInput').value.trim();
+			if (!content) {
+				showToast('请输入内容', 'error');
+				return;
+			}
+			try {
+				const { data, error } = await supabaseClient.from('public_messages').insert([{ user_id: currentUser.id, content: content }]);
+				if (error) throw error;
+				document.getElementById('publicMessageInput').value = '';
+				document.getElementById('publicMessagePreview').innerHTML = '';
+				showToast('消息发送成功', 'success');
+				loadPublicDiscussions();
+			} catch (error) {
+				showToast('发送失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function loadGroups() {
+			if (!currentUser) return;
+			try {
+				const { data, error } = await supabaseClient.from('group_members').select(`group_id,groups(id,name,created_at,profiles:created_by(username))`).eq('user_id', currentUser.id);
+				if (error) throw error;
+				const groupList = document.getElementById('groupList');
+				groupList.innerHTML = '';
+				data.forEach(member => {
+					const group = member.groups;
+					const groupElement = document.createElement('div');
+					groupElement.className = 'group-card';
+					groupElement.innerHTML = `<div class="group-name">${group.name}</div><div class="group-members">创建者: ${group.profiles.username}</div><button class="btn secondary" onclick="navigateTo('/groups/${group.id}')">进入</button>`;
+					groupList.appendChild(groupElement);
+				});
+			} catch (error) {
+				showToast('加载群组失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function enterGroup(groupId) {
+			try {
+				const { data, error } = await supabaseClient.from('groups')
+					.select('*')
+					.eq('id', groupId)
+					.single();
+		
+				if (error) throw error;
+		
+				currentGroup = data;
+				showPage('group');
+				loadGroupMessages();
+		
+				const targetPath = `/groups/${groupId}`;
+				if (window.location.pathname !== targetPath) {
+					history.pushState({ page: 'group', group: groupId }, '', targetPath);
+				}
+		
+			} catch (error) {
+				showToast('进入群组失败: ' + error.message, 'error');
+				showPage('groups');
+				history.replaceState({ page: 'groups' }, '', '/groups'); // replaceState
+			}
+		}
+		
+		async function loadGroupMessages() {
+			if (!currentGroup) {
+				console.warn("loadGroupMessages called but currentGroup is not set.");
+				// showPage('groups');
+				return;
+			}
+		
+			if (document.getElementById('groupPage').classList.contains('hidden')) return;
+		
+			try {
+				document.getElementById('groupTitle').textContent = currentGroup.name;
+				const { data, error } = await supabaseClient.from('group_messages')
+					.select(`id,content,created_at,user_id,profiles:user_id(username),redpackets(id,amount,description,count,claimed_count,total_claimed_amount,redpacket_claims(user_id))`)
+					.eq('group_id', currentGroup.id)
+					.order('created_at', { ascending: false });
+		
+				if (error) throw error;
+		
+				const messageList = document.getElementById('groupMessageList');
+				messageList.innerHTML = '';
+				data.forEach(message => {
+					const messageElement = createMessageElement(message, 'group');
+					messageList.appendChild(messageElement);
+				});
+			} catch (error) {
+				showToast('加载群组消息失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function sendGroupMessage() {
+			if (!currentUser || !currentGroup) {
+				showToast('请先登录并选择群组', 'error');
+				return;
+			}
+			const content = document.getElementById('groupMessageInput').value.trim();
+			if (!content) {
+				showToast('请输入内容', 'error');
+				return;
+			}
+			try {
+				const { data, error } = await supabaseClient.from('group_messages').insert([{ user_id: currentUser.id, group_id: currentGroup.id, content: content }]);
+				if (error) throw error;
+				document.getElementById('groupMessageInput').value = '';
+				document.getElementById('groupMessagePreview').innerHTML = '';
+				showToast('消息发送成功', 'success');
+				loadGroupMessages();
+			} catch (error) {
+				showToast('发送失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function createGroup() {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			const name = document.getElementById('groupNameInput').value.trim();
+			const membersInput = document.getElementById('groupMembersInput').value.trim();
+			if (!name) {
+				showToast('请输入群组名称', 'error');
+				return;
+			}
+			const members = membersInput ? membersInput.split(',').map(m => m.trim()).filter(m => m) : [];
+			try {
+				const { data: group, error: groupError } = await supabaseClient.from('groups').insert([{ name: name, created_by: currentUser.id }]).select().single();
+				if (groupError) throw groupError;
+				const membersToAdd = [...members, currentUser.username];
+				const uniqueMembers = [...new Set(membersToAdd)];
+				const { data: users, error: usersError } = await supabaseClient.from('profiles').select('id, username').in('username', uniqueMembers);
+				if (usersError) throw usersError;
+				const memberInserts = users.map(user => ({ group_id: group.id, user_id: user.id }));
+				const { error: membersError } = await supabaseClient.from('group_members').insert(memberInserts);
+				if (membersError) throw membersError;
+				hideModal('createGroupModal');
+				showToast('群组创建成功', 'success');
+				loadGroups();
+			} catch (error) {
+				showToast('创建群组失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function loadArticles() {
+			try {
+				const { data, error } = await supabaseClient.from('articles').select(`id,title,created_at,profiles:author_id(username),status`).eq('status', 'published').order('created_at', { ascending: false });
+				if (error) throw error;
+				const articleList = document.getElementById('articleList');
+				articleList.innerHTML = '';
+				if (data.length === 0) {
+					articleList.innerHTML = '<p>暂无公开文章</p>';
+					return;
+				}
+				data.forEach(article => {
+					const articleElement = document.createElement('div');
+					articleElement.className = 'message-item';
+					articleElement.innerHTML = `<div class="message-header"><span class="message-author">${article.profiles.username}</span><span class="message-time">${moment(article.created_at).fromNow()}</span></div><div class="message-content"><h3><a href="javascript:void(0)" onclick="navigateTo('/articles/${article.id}')">${article.title}</a></h3></div>`;
+					articleList.appendChild(articleElement);
+				});
+			} catch (error) {
+				showToast('加载文章失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function viewArticle(articleId) {
+			try {
+				const { data, error } = await supabaseClient.from('articles')
+					.select(`id,title,content,created_at,profiles:author_id(username)`)
+					.eq('id', articleId)
+					.single();
+		
+				if (error) throw error;
+		
+				currentArticle = data;
+				showPage('article');
+				document.getElementById('articleTitle').innerHTML = `公开文章：${data.title}<hr>`;
+				document.getElementById('articleContent').innerHTML = marked.parse(data.content);
+				enhanceElement(document.getElementById('articleContent'));
+		
+				const targetPath = `/articles/${articleId}`;
+				if (window.location.pathname !== targetPath) {
+					history.pushState({ page: 'article', article: articleId }, '', targetPath);
+				}
+		
+			} catch (error) {
+				showToast('加载文章失败: ' + error.message, 'error');
+				showPage('articles');
+				history.replaceState({ page: 'articles' }, '', '/articles'); // replaceState 避免错误页面留在历史中
+			}
+		}
+		
+		function updateEditArticlePreview() {
+			const content = document.getElementById('editArticleContentInput').value;
+			document.getElementById('editArticlePreview').innerHTML = marked.parse(content);
+			enhanceElement(document.getElementById('editArticlePreview'));
+		}
+		
+		async function showEditArticleModal(articleId) {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			try {
+				const { data, error } = await supabaseClient.from('articles').select('*').eq('id', articleId).single();
+				if (error) throw error;
+				document.getElementById('editArticleTitleInput').value = data.title;
+				document.getElementById('editArticleContentInput').value = data.content;
+				updateEditArticlePreview();
+				document.getElementById('editArticleModal').dataset.articleId = articleId;
+				showModal('editArticleModal');
+			} catch (error) {
+				showToast('加载文章失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function updateArticle() {
+			const articleId = document.getElementById('editArticleModal').dataset.articleId;
+			const title = document.getElementById('editArticleTitleInput').value.trim();
+			const content = document.getElementById('editArticleContentInput').value.trim();
+			if (!title) {
+				showToast('请输入标题', 'error');
+				return;
+			}
+			if (!content) {
+				showToast('请输入内容', 'error');
+				return;
+			}
+			try {
+				document.getElementById('draftList').innerHTML = '加载中...';
+				const { error } = await supabaseClient.from('articles').update({ title: title, content: content }).eq('id', articleId);
+				if (error) throw error;
+				hideModal('editArticleModal');
+				showToast('文章已更新', 'success');
+				loadDrafts();
+			} catch (error) {
+				showToast('更新失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function loadDrafts() {
+			if (!currentUser) return;
+			try {
+				const { data, error } = await supabaseClient.from('articles').select(`id,title,content,created_at,status`).eq('author_id', currentUser.id).in('status', ['draft', 'rejected']).order('created_at', { ascending: false });
+				if (error) throw error;
+				const draftList = document.getElementById('draftList');
+				draftList.innerHTML = '';
+				if (data.length === 0) {
+					draftList.innerHTML = '<p>暂无文章</p>';
+					return;
+				}
+				data.forEach(draft => {
+					const draftElement = document.createElement('div');
+					draftElement.className = 'message-item';
+					const statusLabel = draft.status === 'draft' ? '草稿' : '审核未通过';
+					draftElement.innerHTML = `<div class="message-header">
+											  	  <span>${statusLabel}</span>
+												  <span class="message-time">${moment(draft.created_at).fromNow()}</span>
+											  </div>
+											  <div class="message-content">
+												  <h3>${draft.title}</h3>
+												  <div style="display:flex; gap: 5px;">
+													  <button class="btn secondary" onclick="showEditArticleModal('${draft.id}')">编辑</button>
+													  <button class="btn original" onclick="submitDraft('${draft.id}')">提交审核</button>
+													  <button class="btn danger" onclick="deleteDraft('${draft.id}')">删除</button>
+												  </div>
+											  </div>`;
+					draftList.appendChild(draftElement);
+				});
+			} catch (error) {
+				showToast('加载文章失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function saveDraft() {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			const title = document.getElementById('articleTitleInput').value.trim();
+			const content = document.getElementById('articleContentInput').value.trim();
+			if (!title) {
+				showToast('请输入标题', 'error');
+				return;
+			}
+			try {
+				const { data, error } = await supabaseClient.from('articles').insert([{ author_id: currentUser.id, title: title, content: content, status: 'draft' }]).select().single();
+				if (error) throw error;
+				hideModal('createArticleModal');
+				showToast('文章保存成功', 'success');
+				loadDrafts();
+			} catch (error) {
+				showToast('保存文章失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function submitArticle() {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			const title = document.getElementById('articleTitleInput').value.trim();
+			const content = document.getElementById('articleContentInput').value.trim();
+			if (!title) {
+				showToast('请输入标题', 'error');
+				return;
+			}
+			if (!content) {
+				showToast('请输入内容', 'error');
+				return;
+			}
+			try {
+				const { data, error } = await supabaseClient.from('articles').insert([{ author_id: currentUser.id, title: title, content: content, status: 'pending' }]).select().single();
+				if (error) throw error;
+				hideModal('createArticleModal');
+				showToast('文章已提交审核', 'success');
+				loadDrafts();
+			} catch (error) {
+				showToast('提交失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function submitDraft(articleId) {
+			try {
+				const { error } = await supabaseClient.from('articles').update({ status: 'pending' }).eq('id', articleId);
+				if (error) throw error;
+				showToast('已提交审核', 'success');
+				loadDrafts();
+			} catch (error) {
+				showToast('提交失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function deleteDraft(articleId) {
+			if (!confirm('确定要删除这篇文章吗？')) return;
+			try {
+				const { error } = await supabaseClient.from('articles').delete().eq('id', articleId);
+				if (error) throw error;
+				showToast('文章已删除', 'success');
+				loadDrafts();
+			} catch (error) {
+				showToast('删除失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function loadAdminData() {
+			if (!currentUser || currentUser.role !== 'admin') return;
+			try {
+				const { data: pendingArticles, error: articlesError } = await supabaseClient.from('articles').select(`id,title,created_at,profiles:author_id(username)`).eq('status', 'pending').order('created_at', { ascending: false });
+				if (articlesError) throw articlesError;
+				const articleReviewList = document.getElementById('articleReviewList');
+				articleReviewList.innerHTML = '';
+				pendingArticles.forEach(article => {
+					const row = document.createElement('tr');
+					row.innerHTML = `<td>${article.title}</td><td>${article.profiles.username}</td><td>${moment(article.created_at).fromNow()}</td><td><div style="display:flex;gap:5px;"><button class="btn original" onclick="approveArticle('${article.id}')">通过</button><button class="btn danger" onclick="rejectArticle('${article.id}')">拒绝</button><button class="btn secondary" onclick="previewArticle('${article.id}')">预览</button></div></td>`;
+					articleReviewList.appendChild(row);
+				});
+				const { data: users, error: usersError } = await supabaseClient.from('profiles').select('id, username, created_at, role, status').order('created_at', { ascending: false });
+				if (usersError) throw usersError;
+				const userManagementList = document.getElementById('userManagementList');
+				userManagementList.innerHTML = '';
+				users.forEach(user => {
+					const row = document.createElement('tr');
+					row.innerHTML = `<td>${user.username}</td><td>${moment(user.created_at).format('YYYY-MM-DD')}</td><td>${user.role === 'admin' ? '管理员' : '普通用户'} / ${user.status || '正常'}</td><td>${user.status === 'banned' ? `<button class="btn original" onclick="unbanUser('${user.id}')">解封</button>` : `<button class="btn danger" onclick="banUser('${user.id}')">封禁</button>`}${user.role !== 'admin' ? `<button class="btn primary" onclick="setAdmin('${user.id}')">设为管理员</button>` : ''}</td>`;
+					userManagementList.appendChild(row);
+				});
+				const { data: groups, error: groupsError } = await supabaseClient.from('groups').select(`id,name,created_at,profiles:created_by(username),group_members(user_id)`).order('created_at', { ascending: false });
+				if (groupsError) throw groupsError;
+				const groupManagementList = document.getElementById('groupManagementList');
+				groupManagementList.innerHTML = '';
+				groups.forEach(group => {
+					const memberCount = group.group_members ? group.group_members.length : 0;
+					const row = document.createElement('tr');
+					row.innerHTML = `<td>${group.name}</td><td>${group.profiles.username}</td><td>${memberCount}</td><td><button class="btn danger" onclick="disbandGroup('${group.id}')">解散</button></td>`;
+					groupManagementList.appendChild(row);
+				});
+				const { data: publicMessages, error: publicError } = await supabaseClient.from('public_messages').select(`id,content,created_at,profiles:user_id(username)`).order('created_at', { ascending: false }).limit(20);
+				const { data: groupMessages, error: groupError } = await supabaseClient.from('group_messages').select(`id,content,created_at,profiles:user_id(username),groups(name)`).order('created_at', { ascending: false }).limit(20);
+				if (publicError || groupError) throw publicError || groupError;
+				const contentManagementList = document.getElementById('contentManagementList');
+				contentManagementList.innerHTML = '';
+				publicMessages.forEach(message => {
+					const row = document.createElement('tr');
+					row.innerHTML = `<td>${message.content.substring(0, 50)}${message.content.length > 50 ? '...' : ''}</td><td>${message.profiles.username}</td><td>公共讨论</td><td>${moment(message.created_at).fromNow()}</td><td><button class="btn danger" onclick="deleteMessage('${message.id}', 'public')">删除</button></td>`;
+					contentManagementList.appendChild(row);
+				});
+				groupMessages.forEach(message => {
+					const row = document.createElement('tr');
+					row.innerHTML = `<td>${message.content.substring(0, 50)}${message.content.length > 50 ? '...' : ''}</td><td>${message.profiles.username}</td><td>群组: ${message.groups.name}</td><td>${moment(message.created_at).fromNow()}</td><td><button class="btn danger" onclick="deleteMessage('${message.id}', 'group')">删除</button></td>`;
+					contentManagementList.appendChild(row);
+				});
+			} catch (error) {
+				showToast('加载管理数据失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function approveArticle(articleId) {
+			try {
+				const { error } = await supabaseClient.from('articles').update({ status: 'published' }).eq('id', articleId);
+				if (error) throw error;
+				showToast('文章已通过', 'success');
+				loadAdminData();
+			} catch (error) {
+				showToast('操作失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function rejectArticle(articleId) {
+			try {
+				const { error } = await supabaseClient.from('articles').update({ status: 'rejected' }).eq('id', articleId);
+				if (error) throw error;
+				showToast('文章已拒绝', 'success');
+				loadAdminData();
+			} catch (error) {
+				showToast('操作失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function previewArticle(articleId) {
+			try {
+				const { data, error } = await supabaseClient.from('articles').select('*').eq('id', articleId).single();
+				if (error) throw error;
+				showModal('previewModal');
+				const modalContent = document.querySelector('#previewModal .modal-content');
+				const bodyContainer = modalContent.querySelector('.modal-body');
+				if (bodyContainer) bodyContainer.innerHTML = '';
+				const titleElement = modalContent.querySelector('.modal-title');
+				if (titleElement) titleElement.textContent = data.title;
+				const tempDiv = document.createElement('div');
+				tempDiv.innerHTML = marked.parse(data.content);
+				if (bodyContainer) {
+					while (tempDiv.firstChild) {
+						bodyContainer.appendChild(tempDiv.firstChild);
+					}
+				}
+				enhanceElement(bodyContainer);
+			} catch (error) {
+				showToast('预览失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function banUser(userId) {
+			if (!confirm('确定要封禁此用户吗？')) return;
+			try {
+				const { error } = await supabaseClient.from('profiles').update({ status: 'banned' }).eq('id', userId);
+				if (error) throw error;
+				showToast('用户已封禁', 'success');
+				loadAdminData();
+			} catch (error) {
+				showToast('操作失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function unbanUser(userId) {
+			try {
+				const { error } = await supabaseClient.from('profiles').update({ status: null }).eq('id', userId);
+				if (error) throw error;
+				showToast('用户已解封', 'success');
+				loadAdminData();
+			} catch (error) {
+				showToast('操作失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function setAdmin(userId) {
+			if (!confirm('确定要将此用户设为管理员吗？')) return;
+			try {
+				const { error } = await supabaseClient.from('profiles').update({ role: 'admin' }).eq('id', userId);
+				if (error) throw error;
+				showToast('用户已设为管理员', 'success');
+				loadAdminData();
+			} catch (error) {
+				showToast('操作失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function disbandGroup(groupId) {
+			if (!confirm('确定要解散此群组吗？所有群组消息将被删除！')) return;
+			try {
+				const { error: messagesError } = await supabaseClient.from('group_messages').delete().eq('group_id', groupId);
+				if (messagesError) throw messagesError;
+				const { error: membersError } = await supabaseClient.from('group_members').delete().eq('group_id', groupId);
+				if (membersError) throw membersError;
+				const { error: groupError } = await supabaseClient.from('groups').delete().eq('id', groupId);
+				if (groupError) throw groupError;
+				showToast('群组已解散', 'success');
+				loadAdminData();
+				if (currentGroup && currentGroup.id === groupId) {
+					currentGroup = null;
+					showPage('groups');
+				}
+			} catch (error) {
+				showToast('操作失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function deleteMessage(messageId, type) {
+			if (!confirm('确定要删除此消息吗？')) return;
+			try {
+				let tableName = type === 'public' ? 'public_messages' : 'group_messages';
+				const { error } = await supabaseClient.from(tableName).delete().eq('id', messageId);
+				if (error) throw error;
+				showToast('消息已删除', 'success');
+				if (type === 'public') loadPublicDiscussions();
+				else loadGroupMessages();
+				if (!document.getElementById('adminPage').classList.contains('hidden')) loadAdminData();
+			} catch (error) {
+				showToast('删除失败: ' + error.message, 'error');
+			}
+		}
+		
+		function sendRedPacket(context) {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			if (currentUser.snake_coin < 1) {
+				showToast('蛇币不足', 'error');
+				return;
+			}
+			redPacketContext = context;
+			showModal('redPacketModal');
+		}
+		
+		async function confirmSendRedPacket() {
+			const amount = parseInt(document.getElementById('redPacketAmount').value);
+			const count = parseInt(document.getElementById('redPacketCount').value);
+			const desc = document.getElementById('redPacketDesc').value.trim() || '恭喜发财，大吉大利';
+			if (!amount || amount < 1) {
+				showToast('请输入正确的金额', 'error');
+				return;
+			}
+			if (currentUser.snake_coin < amount) {
+				showToast('蛇币不足', 'error');
+				return;
+			}
+			try {
+				const { data: redpacket, error: redpacketError } = await supabaseClient.from('redpackets').insert([{ sender_id: currentUser.id, amount: amount, count: count, claimed_count: 0, description: desc }]).select().single();
+				if (redpacketError) throw redpacketError;
+				const { error: coinError } = await supabaseClient.from('profiles').update({ snake_coin: currentUser.snake_coin - amount }).eq('id', currentUser.id);
+				if (coinError) throw coinError;
+				currentUser.snake_coin -= amount;
+				let messageContent = `[红包] ${desc}`;
+				let messageInsert;
+				if (redPacketContext === 'public') {
+					messageInsert = await supabaseClient.from('public_messages').insert([{ user_id: currentUser.id, content: messageContent, redpacket_id: redpacket.id }]);
+				} else {
+					messageInsert = await supabaseClient.from('group_messages').insert([{ user_id: currentUser.id, group_id: currentGroup.id, content: messageContent, redpacket_id: redpacket.id }]);
+				}
+				if (messageInsert.error) throw messageInsert.error;
+				hideModal('redPacketModal');
+				showToast('红包发送成功', 'success');
+				if (redPacketContext === 'public') loadPublicDiscussions();
+				else loadGroupMessages();
+			} catch (error) {
+				showToast('发送红包失败: ' + error.message, 'error');
+			}
+		}
+		
+		async function claimRedPacket(redpacketId, type) {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			try {
+				const { data: existingClaim, error: claimError } = await supabaseClient.from('redpacket_claims').select('*').eq('redpacket_id', redpacketId).eq('user_id', currentUser.id).maybeSingle();
+				if (claimError) throw claimError;
+				if (existingClaim) {
+					showToast('您已经领取过这个红包了', 'error');
+					return;
+				}
+				const { data: redpacket, error: redpacketError } = await supabaseClient.from('redpackets').select('*').eq('id', redpacketId).single();
+				if (redpacketError) throw redpacketError;
+				if (redpacket.claimed_count >= redpacket.count) {
+					showToast('红包已经被领完了', 'error');
+					return;
+				}
+				const remainingAmount = redpacket.amount - redpacket.total_claimed_amount;
+				const remainingCount = redpacket.count - redpacket.claimed_count;
+				let reward;
+				if (remainingAmount === 1) {
+					reward = 1;
+				} else {
+					const max = Math.max(1, remainingAmount - (remainingCount - 1));
+					reward = Math.floor(Math.random() * max) + 1;
+				}
+				const { error: insertClaimError } = await supabaseClient.from('redpacket_claims').insert([{ redpacket_id: redpacketId, user_id: currentUser.id, amount: reward }]);
+				if (insertClaimError) throw insertClaimError;
+				const { error: updateRedpacketError } = await supabaseClient.from('redpackets').update({ claimed_count: redpacket.claimed_count + 1, total_claimed_amount: redpacket.total_claimed_amount + reward }).eq('id', redpacketId);
+				if (updateRedpacketError) throw updateRedpacketError;
+				const { error: updateUserError } = await supabaseClient.from('profiles').update({ snake_coin: currentUser.snake_coin + reward }).eq('id', currentUser.id);
+				if (updateUserError) throw updateUserError;
+				currentUser.snake_coin += reward;
+				showToast(`恭喜您领取了${reward}蛇币！`, 'success');
+				if (type === 'public') loadPublicDiscussions();
+				else loadGroupMessages();
+			} catch (error) {
+				showToast('领取红包失败: ' + error.message, 'error');
+			}
+		}
+		
+		function updatePublicPreview() {
+			const content = document.getElementById('publicMessageInput').value;
+			document.getElementById('publicMessagePreview').innerHTML = marked.parse(content);
+			enhanceElement(document.getElementById('publicMessagePreview'));
+		}
+		
+		function updateGroupPreview() {
+			const content = document.getElementById('groupMessageInput').value;
+			document.getElementById('groupMessagePreview').innerHTML = marked.parse(content);
+			enhanceElement(document.getElementById('groupMessagePreview'));
+		}
+		
+		function updateArticlePreview() {
+			const content = document.getElementById('articleContentInput').value;
+			document.getElementById('articlePreview').innerHTML = marked.parse(content);
+			enhanceElement(document.getElementById('articlePreview'));
+		}
+		
+		function showModal(modalId) {
+			document.getElementById(modalId).style.display = 'flex';
+		}
+		
+		function hideModal(modalId) {
+			document.getElementById(modalId).style.display = 'none';
+		}
+		
+		function showCreateGroupModal() {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			document.getElementById('groupNameInput').value = '';
+			document.getElementById('groupMembersInput').value = '';
+			showModal('createGroupModal');
+		}
+		
+		function showCreateArticleModal() {
+			if (!currentUser) {
+				showToast('请先登录', 'error');
+				return;
+			}
+			document.getElementById('articleTitleInput').value = '';
+			document.getElementById('articleContentInput').value = '';
+			document.getElementById('articlePreview').innerHTML = '';
+			delete document.getElementById('createArticleModal').dataset.articleId;
+			showModal('createArticleModal');
+		}
+		
+		function showToast(message, type) {
+			Swal.fire({
+				toast: true,
+				position: 'bottom-end',
+				icon: type,
+				title: message,
+				showConfirmButton: false,
+				timer: 3000,
+			});
+		}
+		
+		function enhanceElement(element) {
+			renderMathInElement(element, {
+				delimiters: [
+					{ left: '\\(', right: '\\)', display: true },
+					{ left: '$$', right: '$$', display: true },
+					{ left: '$', right: '$', display: false },
+				],
+				errorCallback: (msg, err) => {
+					console.error('MathJax Error:', msg, err);
+				},
+				errorSettings: {
+					message: ['[MathJax error]'],
+					style: {
+						'font-size': '1.2em',
+						'color': 'red',
+					},
+				}
+			});
+			hljs.initLineNumbersOnLoad();
+			element.querySelectorAll('pre code').forEach((block) => {
+				const originalText = block.textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+				let processedText = originalText.replace(/^ +/mg, function (match) {
+					return '&nbsp;'.repeat(match.length);
+				});
+				block.innerHTML = processedText;
+				hljs.highlightElement(block);
+				hljs.lineNumbersBlock(block, { singleLine: true });
+			});
+			setTimeout(() => {
+				addCopyButtons(element);
+			}, 0);
+		}
+		
+		function addCopyButtons(container = document) {
+			const preElements = container.querySelectorAll('pre code');
+			preElements.forEach(codeElement => {
+				if (codeElement.parentNode.parentNode.querySelector('.codecopy-btn')) return;
+				const button = document.createElement('button');
+				button.innerHTML = '<i class="fa-solid fa-copy"></i>';
+				button.classList.add('codecopy-btn');
+				const wrapper = document.createElement('div');
+				wrapper.style = "width:100%;position:relative;";
+				codeElement.parentNode.insertBefore(wrapper, codeElement);
+				wrapper.appendChild(codeElement);
+				wrapper.appendChild(button);
+				new ClipboardJS(button, {
+					text: () => codeElement.innerText.replace(/\n\n/g, "\n")
+				}).on('success', e => {
+					e.trigger.innerHTML = '<i class="fa-solid fa-check"></i>';
+					setTimeout(() => e.trigger.innerHTML = '<i class="fa-solid fa-copy"></i>', 1000);
+				}).on('error', e => {
+					e.trigger.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+					setTimeout(() => e.trigger.innerHTML = '<i class="fa-solid fa-copy"></i>', 1000);
+				});
+			});
+		}
+		
+		const carouselContainer = document.querySelector('.carousel-container');
+		const imagesContainer = carouselContainer.querySelector('.carousel-images');
+		const indicatorsContainer = carouselContainer.querySelector('.carousel-indicators');
+		let imageCount = 0;
+		let currentIndex = 0;
+		let interval;
+		let isTransitioning = false;
+		
+		async function loadAds() {
+			try {
+				const response = await fetch('./ad/ad-list.json');
+				const ads = await response.json();
+		
+				ads.forEach(ad => {
+					const link = document.createElement('a');
+					link.href = ad.url;
+					link.target = "_blank";
+		
+					const img = document.createElement('img');
+					img.src = ad.image.trim();
+					img.alt = ad.alt || '广告';
+		
+					link.appendChild(img);
+					imagesContainer.appendChild(link);
+					imageCount++;
+				});
+		
+				const firstClone = imagesContainer.firstElementChild.cloneNode(true);
+				const lastClone = imagesContainer.lastElementChild.cloneNode(true);
+		
+				imagesContainer.prepend(lastClone);
+				imagesContainer.append(firstClone);
+		
+				imageCount += 2;
+		
+				currentIndex = 1;
+				updateCarouselPosition();
+		
+				ads.forEach((_, index) => {
+					const indicator = createIndicator(index);
+					indicatorsContainer.appendChild(indicator);
+				});
+		
+				updateIndicators();
+		
+			} catch (error) {
+				console.error("加载广告失败：", error);
+			}
+		}
+		
+		function createIndicator(index) {
+			const indicator = document.createElement('div');
+			indicator.className = 'carousel-indicator';
+			if (index === 0) indicator.classList.add('active');
+			indicator.addEventListener('click', () => {
+				stopSlider();
+				goToSlide(index + 1);
+				startSlider();
+			});
+			return indicator;
+		}
+		
+		function updateIndicators() {
+			const indicators = document.querySelectorAll('.carousel-indicator');
+			indicators.forEach((indicator, index) => {
+				indicator.classList.toggle('active', index === (currentIndex - 1)); // -1 是因为克隆
+			});
+		}
+		
+		function updateCarouselPosition() {
+			const offset = -currentIndex * 100;
+			imagesContainer.style.transform = `translateX(${offset}%)`;
+		}
+		
+		function goToSlide(index) {
+			if (isTransitioning) return;
+			isTransitioning = true;
+		
+			currentIndex = index;
+			updateCarouselPosition();
+			updateIndicators();
+		}
+		
+		imagesContainer.addEventListener('transitionend', () => {
+			isTransitioning = false;
+		
+			if (currentIndex === imageCount - 1) {
+				currentIndex = 1;
+				imagesContainer.style.transition = 'none';
+				updateCarouselPosition();
+				setTimeout(() => {
+					imagesContainer.style.transition = 'transform 0.5s ease-in-out';
+				}, 10);
+			}
+		
+			if (currentIndex === 0) {
+				currentIndex = imageCount - 2;
+				imagesContainer.style.transition = 'none';
+				updateCarouselPosition();
+				setTimeout(() => {
+					imagesContainer.style.transition = 'transform 0.5s ease-in-out';
+				}, 10);
+			}
+		
+			updateIndicators();
+		});
+		
+		function nextSlide() {
+			if (isTransitioning) return;
+			currentIndex++;
+			goToSlide(currentIndex);
+		}
+		
+		function prevSlide() {
+			if (isTransitioning) return;
+			currentIndex--;
+			goToSlide(currentIndex);
+		}
+		
+		function startSlider() {
+			stopSlider();
+			interval = setInterval(nextSlide, 3000);
+		}
+		
+		function stopSlider() {
+			clearInterval(interval);
+		}
+		
+		document.querySelector('.carousel-btn.next').addEventListener('click', () => {
+			stopSlider();
+			nextSlide();
+			startSlider();
+		});
+		
+		document.querySelector('.carousel-btn.prev').addEventListener('click', () => {
+			stopSlider();
+			prevSlide();
+			startSlider();
+		});
+		
+		imagesContainer.addEventListener('mouseenter', stopSlider);
+		imagesContainer.addEventListener('mouseleave', startSlider);
+		imagesContainer.addEventListener('touchstart', stopSlider);
+		imagesContainer.addEventListener('touchend', startSlider);
+		
+		loadAds().then(() => {
+			startSlider();
+		});
+		
+		function navigateTo(path, state = {}) {
+			if (!path.startsWith('/')) {
+				path = '/' + path;
+			}
+			history.pushState(state, '', path);
+			handleRoute(path, state);
+		}
+		
+		function handleRoute(path = window.location.pathname, state = history.state) {
+			const pathParts = path.substring(1).split('/').filter(part => part !== '');
+		
+			let page = 'home';
+			let id = null;
+			let articleId = null;
+			let groupId = null;
+		
+			if (pathParts[0] === '') {
+				page = 'home';
+			} else if (pathParts[0] === 'public') {
+				page = 'public';
+			} else if (pathParts[0] === 'groups') {
+				if (pathParts[1]) {
+					page = 'group';
+					groupId = pathParts[1];
+				} else {
+					page = 'groups';
+				}
+			} else if (pathParts[0] === 'articles') {
+				if (pathParts[1]) {
+					page = 'article';
+					articleId = pathParts[1];
+				} else {
+					page = 'articles';
+				}
+			} else if (pathParts[0] === 'drafts' || (pathParts[0] === 'article' && pathParts[1] === 'mine')) {
+				page = 'drafts';
+			} else if (pathParts[0] === 'admin') {
+				page = 'admin';
+			}
+		
+			if (page === 'article' && articleId) {
+				viewArticle(articleId);
+			} else if (page === 'group' && groupId) {
+				enterGroup(groupId);
+			} else {
+				showPage(page);
+			}
+		}
+	</script>
+</body>
+</html>

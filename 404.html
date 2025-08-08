@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <!-- 使用 meta 标签进行重定向是一种简单方法 -->
+  <!-- 注意：这里的 content="0" 表示延迟0 秒后重定向 -->
+  <!-- window.location.pathname + window.location.search + window.location.hash 会保留原始 URL 的路径、查询参数和锚点 -->
+  <script>
+    // 为了确保兼容性，同时使用 JavaScript 和 Meta Refresh
+    // JavaScript 重定向（首选）
+    (function () {
+      var redirect = sessionStorage.getItem('redirect') || location.pathname + location.search + location.hash;
+      sessionStorage.setItem('redirect', location.pathname + location.search + location.hash);
+      // 使用 replace 而不是 assign，这样不会在历史记录中留下 404 页面
+      location.replace("/SnakeBlocCommunity" + redirect);
+      // 注意： "/SnakeBlocCommunity" 需要替换为你的实际仓库名（如果有的话）
+      // 如果你的项目是部署在 username.github.io 根目录下，则路径是 "/"
+      // 如果你的项目是部署在 username.github.io/your-repo-name/ 下，则路径是 "/your-repo-name/"
+      // 请根据你的实际情况修改下面这行代码中的路径：
+      // location.replace("/your-repository-name" + redirect);
+      // 或者，如果你在根目录：
+      // location.replace("/" + redirect);
+    })();
+  </script>
+  <!-- Meta Refresh 重定向（备用） -->
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=/SnakeBlocCommunity/">
+    <!-- 同样，请根据你的实际部署路径修改上面的 URL -->
+  </noscript>
+</head>
+
+<body>
+  <!-- 如果 JavaScript 被禁用且 Meta Refresh 也失败（不太可能），显示一条消息 -->
+  <p>如果您的浏览器没有自动重定向，请<a href="/SnakeBlocCommunity/">点击这里</a>。</p>
+  <!-- 请根据你的实际部署路径修改上面的 URL -->
+</body>
+
+</html>
