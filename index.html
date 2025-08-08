@@ -2037,7 +2037,7 @@
 				default:
 					stopSlider();
 					console.warn(`Unknown page ID: ${pageId}`);
-					history.pushState({ page: pageId }, '', `/${pageId}`); // 为未知页面也生成一个 URL
+					showPage('home');
 			}
 		}
 		
@@ -3011,4 +3011,5 @@
 		}
 	</script>
 </body>
+
 </html>
