@@ -1367,6 +1367,7 @@
 	<script src="https://cdn.iocdn.cc/npm/sweetalert2@11"></script>
 	<script src="https://cdn.iocdn.cc/npm/highlightjs-line-numbers.js@2.9.0/dist/highlightjs-line-numbers.min.js"></script>
 	<script>
+		(()=>{
 		const supabaseUrl = 'https://rruioupxqqovjskdxbsz.supabase.co';
 		const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydWlvdXB4cXFvdmpza2R4YnN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MDMxMjAsImV4cCI6MjA2OTI3OTEyMH0.is1Y3XVBu_mXyDKUjEoGhJtzzncD0wtcSrqLcnfm24c';
 		const { createClient } = supabase;
@@ -3008,8 +3009,9 @@
 			} else {
 				showPage(page);
 			}
-		}
+		}))()
 	</script>
 </body>
 
 </html>
+
